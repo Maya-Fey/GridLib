@@ -74,18 +74,36 @@ public class PositionGrid {
 		int y = pos / width;
 		boolean cx = (dir & 1) == 1; dir >>>= 1;
 		boolean cy = (dir & 1) == 1; dir >>>= 1;
-		if(cx) {
-			
-			boolean neg = (dir & 1) == 0;
-			x = neg ? x - space : x + space;
-			if(x < 0)
-				x += width;
-		} dir >>>= 1;
-		if(cy) {
-			boolean neg = (dir & 1) == 0;
-			y = neg ? y - space : (y + space) % height;
-			if(y < 0)
-				y += height;
+		if(wrap) {
+			if(cx) {
+				boolean neg = (dir & 1) == 0;
+				x = neg ? x - space : (x + space) % width;
+				if(x < 0)
+					x += width;
+			} dir >>>= 1;
+			if(cy) {
+				boolean neg = (dir & 1) == 0;
+				y = neg ? y - space : (y + space) % height;
+				if(y < 0)
+					y += height;
+			}
+		} else {
+			if(cx) {
+				boolean neg = (dir & 1) == 0;
+				x = neg ? x - space : x + space;
+				if(x < 0 || x >= width) {
+					grid[pos] = 0;
+					return -1;
+				}
+			} dir >>>= 1;
+			if(cy) {
+				boolean neg = (dir & 1) == 0;
+				y = neg ? y - space : y + space;
+				if(y < 0 || y >= width) {
+					grid[pos] = 0;
+					return -1;
+				}
+			}
 		}
 		int npos = y * width + x;
 		grid[npos] = grid[pos];
@@ -98,17 +116,36 @@ public class PositionGrid {
 		int pos = y * width + x;
 		boolean cx = (dir & 1) == 1; dir >>>= 1;
 		boolean cy = (dir & 1) == 1; dir >>>= 1;
-		if(cx) {
-			boolean neg = (dir & 1) == 0;
-			x = neg ? x - space : x + space;
-			if(x < 0)
-				x += width;
-		} dir >>>= 1;
-		if(cy) {
-			boolean neg = (dir & 1) == 0;
-			y = neg ? y - space : (y + space) % height;
-			if(y < 0)
-				y += height;
+		if(wrap) {
+			if(cx) {
+				boolean neg = (dir & 1) == 0;
+				x = neg ? x - space : (x + space) % width;
+				if(x < 0)
+					x += width;
+			} dir >>>= 1;
+			if(cy) {
+				boolean neg = (dir & 1) == 0;
+				y = neg ? y - space : (y + space) % height;
+				if(y < 0)
+					y += height;
+			}
+		} else {
+			if(cx) {
+				boolean neg = (dir & 1) == 0;
+				x = neg ? x - space : x + space;
+				if(x < 0 || x >= width) {
+					grid[pos] = 0;
+					return -1;
+				}
+			} dir >>>= 1;
+			if(cy) {
+				boolean neg = (dir & 1) == 0;
+				y = neg ? y - space : y + space;
+				if(y < 0 || y >= width) {
+					grid[pos] = 0;
+					return -1;
+				}
+			}
 		}
 		int npos = y * width + x;
 		grid[npos] = grid[pos];
@@ -120,12 +157,21 @@ public class PositionGrid {
 	{
 		int x = pos % width;
 		int y = pos / width;
-		x = nx < 0 ? x + nx : (x + nx) % width;
-		y = ny < 0 ? y + ny : (y + ny) % height;
-		if(x < 0)
-			x += width;
-		if(y < 0)
-			y += height;
+		if(wrap) {
+			x = nx < 0 ? x + nx : (x + nx) % width;
+			y = ny < 0 ? y + ny : (y + ny) % height;
+			if(x < 0)
+				x += width;
+			if(y < 0)
+				y += height;
+		} else {
+			x += nx;
+			y += ny;
+			if(x < 0 || x >= width || y < 0 || y >= height) {
+				grid[pos] = 0;
+				return -1;
+			}
+		}
 		int npos = y * width + x;
 		grid[npos] = grid[pos];
 		grid[pos] = 0;
@@ -135,12 +181,21 @@ public class PositionGrid {
 	public int moveRelPos(int x, int y, int nx, int ny)
 	{
 		int pos = y * width + x;
-		x = nx < 0 ? x + nx : (x + nx) % width;
-		y = ny < 0 ? y + ny : (y + ny) % height;
-		if(x < 0)
-			x += width;
-		if(y < 0)
-			y += height;
+		if(wrap) {
+			x = nx < 0 ? x + nx : (x + nx) % width;
+			y = ny < 0 ? y + ny : (y + ny) % height;
+			if(x < 0)
+				x += width;
+			if(y < 0)
+				y += height;
+		} else {
+			x += nx;
+			y += ny;
+			if(x < 0 || x >= width || y < 0 || y >= height) {
+				grid[pos] = 0;
+				return -1;
+			}
+		}
 		int npos = y * width + x;
 		grid[npos] = grid[pos];
 		grid[pos] = 0;
