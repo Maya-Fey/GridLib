@@ -5,25 +5,22 @@ import java.util.Arrays;
 
 public class GridView<Type> {
 	
-	private final PositionGrid grid;
 	private final Type[] arr;
 	private final int[] x;
 	private final int[] y;
 	
 	private int size = 0;
 	
-	public GridView(PositionGrid grid, Type[] arr)
+	public GridView(Type[] arr)
 	{
-		this.grid = grid;
 		this.arr = arr;
 		this.x = new int[arr.length];
 		this.y = new int[arr.length];
 	}
 	
 	@SuppressWarnings("unchecked")
-	public GridView(PositionGrid grid, Class<Type> type, int size)
+	public GridView(Class<Type> type, int size)
 	{
-		this.grid = grid;
 		this.arr = (Type[]) Array.newInstance(type, size);
 		this.x = new int[size];
 		this.y = new int[size];
