@@ -202,6 +202,21 @@ public class PositionGrid {
 		return npos;
 	}
 	
+	/**
+	 * xy[0] = X
+	 * xy[1] = Y
+	 */
+	public void getXY(int pos, int[] xy)
+	{
+		xy[0] = pos % width;
+		xy[1] = pos / width;
+	}
+	
+	public int fromXY(int x, int y)
+	{
+		return y * width + x;
+	}
+	
 	public boolean getWrapped()
 	{
 		return this.wrap;
