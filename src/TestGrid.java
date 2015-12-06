@@ -1,3 +1,4 @@
+import mayafey.grids.data.GridObjectManager;
 import mayafey.grids.data.PositionGrid;
 
 public final class TestGrid {
@@ -5,10 +6,11 @@ public final class TestGrid {
 	public static final void main(String[] args)
 	{
 		PositionGrid grid = new PositionGrid(4);
+		GridObjectManager<String> manager = new GridObjectManager<String>(grid, String.class, 10);
 		grid.setWrapped(true);
-		grid.set(1, 1, 1);
-		grid.moveRel(1, 1, PositionGrid.NORTHEAST, 3);
-		System.out.println(grid.get(0, 0));
+		manager.add("Donuts", 0);
+		manager.moveRel(0, PositionGrid.NORTH, 1);
+		System.out.println(manager.getPos(0));
 	}
 
 }
