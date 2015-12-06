@@ -32,6 +32,16 @@ public class PositionGrid {
 		this.grid = new int[width * height];
 	}
 	
+	public int getWidth()
+	{
+		return width;
+	}
+	
+	public int getHeight()
+	{
+		return this.height;
+	}
+	
 	public int get(int pos)
 	{
 		return grid[pos];
