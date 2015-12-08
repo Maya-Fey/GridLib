@@ -10,6 +10,7 @@ public class GridView<Type> {
 	private final int[] y;
 	
 	private int size = 0;
+	private int givenSize = 0;
 	
 	public GridView(Type[] arr)
 	{
@@ -29,6 +30,16 @@ public class GridView<Type> {
 	public int size()
 	{
 		return this.size;
+	}
+	
+	public int getGivenSize()
+	{
+		return this.givenSize;
+	}
+	
+	public void setGivenSize(int size)
+	{
+		this.givenSize = size;
 	}
 	
 	/**
