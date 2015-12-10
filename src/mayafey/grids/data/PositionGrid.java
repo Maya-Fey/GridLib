@@ -2,6 +2,26 @@ package mayafey.grids.data;
 
 public class PositionGrid {
 	
+	private static final String[] names = new String[] {
+		"Stay",      //000
+		"West",      //001
+		"South",     //002
+		"Southwest", //003
+		"",          //004
+		"East",      //005
+		"",          //006
+		"Southeast", //007
+		"",          //010
+		"",          //011
+		"North",     //012
+		"Northwest", //013
+		"",          //014
+		"",          //015
+		"",          //016
+		"Northeast"  //017
+	};
+	
+	public static final int STAY      = 000;
 	public static final int NORTH     = 012;
 	public static final int NORTHEAST = 017;
 	public static final int EAST      = 005;
@@ -80,6 +100,8 @@ public class PositionGrid {
 	
 	public int moveRel(int pos, int dir, int space)
 	{
+		if(dir == 0)
+			return pos;
 		int x = pos % width;
 		int y = pos / width;
 		boolean cx = (dir & 1) == 1; dir >>>= 1;
@@ -123,6 +145,8 @@ public class PositionGrid {
 	
 	public int moveRel(int x, int y, int dir, int space)
 	{
+		if(dir == 0)
+			return  y * width + x;
 		int pos = y * width + x;
 		boolean cx = (dir & 1) == 1; dir >>>= 1;
 		boolean cy = (dir & 1) == 1; dir >>>= 1;
@@ -235,6 +259,11 @@ public class PositionGrid {
 	public void setWrapped(boolean wrap)
 	{
 		this.wrap = wrap;
+	}
+	
+	public static String getDirection(int pos)
+	{
+		return names[pos];
 	}
 
 }
