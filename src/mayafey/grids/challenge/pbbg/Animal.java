@@ -3,7 +3,6 @@ package mayafey.grids.challenge.pbbg;
 public abstract class Animal {
 
 	protected int health;
-	protected int maxhealth;
 	
 	protected boolean alive = true;
 	
@@ -11,8 +10,8 @@ public abstract class Animal {
 	{
 		if(alive) {
 			regenerate(add);
-			if(health > maxhealth)
-				health = maxhealth;
+			if(health > this.getMaxHealth())
+				health = this.getMaxHealth();
 		}
 	}
 	
@@ -25,13 +24,13 @@ public abstract class Animal {
 		}
 	}
 	
-	public void regenerate(int add)
+	private void regenerate(int add)
 	{
 		health += add;
 		
 	}
 	
-	public void damage(int damage)
+	private void damage(int damage)
 	{
 		health -= damage;
 	}
@@ -47,5 +46,6 @@ public abstract class Animal {
 	}
 	
 	public abstract String getType();
+	public abstract int getMaxHealth();
 	
 }

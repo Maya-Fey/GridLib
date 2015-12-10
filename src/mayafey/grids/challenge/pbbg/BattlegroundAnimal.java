@@ -75,5 +75,10 @@ public abstract class BattlegroundAnimal extends Animal {
 	{
 		return reader.distanceFrom(pos[0], x, pos[1], y);
 	}
+	
+	public int getMaxHealth()
+	{
+		return this.weight / 5 + 10;
+	}
 
 }
