@@ -2,12 +2,14 @@ package mayafey.grids.data;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Iterator;
 
 public class GridView<Type> {
 	
 	private final Type[] arr;
-	private final int[] x;
-	private final int[] y;
+	
+	private final int[] x,
+						y;
 	
 	private int size = 0;
 	private int givenSize = 0;
@@ -52,11 +54,25 @@ public class GridView<Type> {
 		xy[1] = y[pos];
 	}
 	
+	public int getX(int pos)
+	{
+		return x[pos];
+	}
+	
+	public int getY(int pos)
+	{
+		return y[pos];
+	}
+	
 	public Type getObj(int pos)
 	{
 		return arr[pos];
 	}
 	
+	public GridPosition<Type> getPosition(int pos)
+	{
+		return new GridPosition<Type>(arr[pos], x[pos], y[pos]);
+	}
 	public void reset()
 	{
 		Arrays.fill(arr, 0, size, null);
@@ -70,6 +86,75 @@ public class GridView<Type> {
 		   arr[size  ] = obj;
 		this.x[size  ] = x;
 		this.y[size++] = y;
+	}
+	
+	public Iterator<GridPosition<Type>> iterator()
+	{
+		return new GridViewIterator<Type>(this);
+	}
+	
+	private static final class GridViewIterator<Type> 
+						 implements Iterator<GridPosition<Type>> {
+		
+		private final GridView<Type> view;
+		
+		private int pos = 0;
+		
+		private GridViewIterator(GridView<Type> view)
+		{
+			this.view = view;
+		}
+		
+		public boolean hasNext()
+		{
+			return pos < view.getGivenSize();
+		}
+
+		public GridPosition<Type> next()
+		{
+			return view.getPosition(pos++);
+		}
+		
+	}
+	
+	public static final class GridPosition<Type> {
+		
+		private final Type obj;
+		
+		private final int x, y;
+		
+		public GridPosition(Type obj, int x, int y)
+		{
+			this.obj = obj;
+			this.x = x;
+			this.y = y;
+		}
+		
+		public int getX()
+		{
+			return x;
+		}
+		
+		public int getY()
+		{
+			return y;
+		}
+		
+		public Type getObj()
+		{
+			return obj;
+		}
+		
+		/**
+		 * xy[0] = X
+		 * xy[1] = Y
+		 */
+		public void getPos(int[] xy)
+		{
+			xy[0] = x;
+			xy[1] = y;
+		}
+		
 	}
 
 }

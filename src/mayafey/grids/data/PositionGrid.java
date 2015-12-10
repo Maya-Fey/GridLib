@@ -21,15 +21,18 @@ public class PositionGrid {
 		"Northeast"  //017
 	};
 	
-	public static final int STAY      = 000;
-	public static final int NORTH     = 012;
-	public static final int NORTHEAST = 017;
-	public static final int EAST      = 005;
-	public static final int SOUTHEAST = 007;
-	public static final int SOUTH     = 002;
-	public static final int SOUTHWEST = 003;
-	public static final int WEST      = 001;
-	public static final int NORTHWEST = 013;
+	public static final int STAY      =  000;
+	public static final int NORTH     =  012;
+	public static final int NORTHEAST =  017;
+	public static final int EAST      =  005;
+	public static final int SOUTHEAST =  007;
+	public static final int SOUTH     =  002;
+	public static final int SOUTHWEST =  003;
+	public static final int WEST      =  001;
+	public static final int NORTHWEST =  013;
+	
+	private static final int INORTH   = ~012;
+	private static final int IEAST    = ~005;
 	
 	private final int width;
 	private final int height;
@@ -264,6 +267,46 @@ public class PositionGrid {
 	public static String getDirection(int pos)
 	{
 		return names[pos];
+	}
+	
+	public static boolean goesNorth(int dir)
+	{
+		return (dir & NORTH) == NORTH; 
+	}
+	
+	public static boolean goesSouth(int dir)
+	{
+		return (dir & SOUTH) == SOUTH; 
+	}
+	
+	public static boolean goesEast(int dir)
+	{
+		return (dir & EAST) == EAST; 
+	}
+	
+	public static boolean goesWest(int dir)
+	{
+		return (dir & WEST) == WEST; 
+	}
+	
+	public static int setNorth(int dir)
+	{
+		return dir | NORTH;
+	}
+	
+	public static int setSouth(int dir)
+	{
+		return (dir & INORTH) | SOUTH;
+	}
+	
+	public static int setEast(int dir)
+	{
+		return dir | EAST;
+	}
+	
+	public static int setWest(int dir)
+	{
+		return (dir & IEAST) | WEST;
 	}
 
 }

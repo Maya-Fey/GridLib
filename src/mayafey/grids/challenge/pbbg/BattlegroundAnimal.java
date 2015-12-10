@@ -49,7 +49,6 @@ public abstract class BattlegroundAnimal extends Animal {
 	public abstract boolean defend(String animal);
 	public abstract void tick();
 	public abstract int attack();
-	public abstract int getSpeed();
 	public abstract int getMove(GridView<String> view);
 	
 	public final Random getRandom()
