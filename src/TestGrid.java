@@ -1,16 +1,16 @@
-import mayafey.grids.data.GridObjectManager;
+import java.util.Random;
+
+import mayafey.grids.data.GridReader;
 import mayafey.grids.data.PositionGrid;
 
 public final class TestGrid {
 
 	public static final void main(String[] args)
 	{
-		PositionGrid grid = new PositionGrid(4);
-		GridObjectManager<String> manager = new GridObjectManager<String>(grid, String.class, 10);
-		grid.setWrapped(true);
-		manager.add("Donuts", 0);
-		manager.moveRel(0, PositionGrid.NORTH, 1);
-		System.out.println(manager.getPos(0));
+		PositionGrid grid = new PositionGrid(10);
+		GridReader reader = new GridReader(grid);
+		for(int i = 0; i < 10; i++)
+			System.out.println(PositionGrid.getDirection(reader.getDirection(0, i, 0, 9)));
 	}
 
 }
