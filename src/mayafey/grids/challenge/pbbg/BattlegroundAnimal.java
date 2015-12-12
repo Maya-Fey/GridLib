@@ -22,6 +22,11 @@ public abstract class BattlegroundAnimal extends Animal {
 		this.random = rand;
 	}
 	
+	public abstract boolean defend(String animal);
+	public abstract void tick();
+	public abstract int attack();
+	public abstract int getMove(GridView<String> view);
+	
 	public void damage(int damage)
 	{
 		damage *= 100;
@@ -41,17 +46,12 @@ public abstract class BattlegroundAnimal extends Animal {
 		return this.resistance;
 	}
 	
-	public final int getVision()
+	public int getVision()
 	{
 		return this.vision;
 	}
 	
-	public abstract boolean defend(String animal);
-	public abstract void tick();
-	public abstract int attack();
-	public abstract int getMove(GridView<String> view);
-	
-	public final Random getRandom()
+	public Random getRandom()
 	{
 		return this.random;
 	}
@@ -61,19 +61,24 @@ public abstract class BattlegroundAnimal extends Animal {
 		return this.pos;
 	}
 	
-	public final int getX()
+	public int getX()
 	{
 		return pos[0];
 	}
 	
-	public final int getY()
+	public int getY()
 	{
 		return pos[1];
 	}
 	
-	public final int distanceFrom(int x, int y)
+	public int distanceFrom(int x, int y)
 	{
 		return reader.distanceFrom(pos[0], x, pos[1], y);
+	}
+	
+	public int directionTo(int x, int y)
+	{
+		return reader.getDirection(pos[0], x, pos[1], y);
 	}
 	
 	public int getMaxHealth()
