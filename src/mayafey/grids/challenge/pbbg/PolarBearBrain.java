@@ -3,6 +3,12 @@ package mayafey.grids.challenge.pbbg;
 import mayafey.grids.data.GridView;
 
 public abstract class PolarBearBrain {
+	
+	public static final int VISION = 0;
+	public static final int RESISTANCE = 1;
+	public static final int ATTACK = 2;
+	public static final int DIGEFF = 3;
+	public static final int RESPEFF = 4;
 
 	protected PolarBearAccessObject access;
 	

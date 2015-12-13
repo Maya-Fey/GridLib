@@ -19,6 +19,23 @@ public class PolarBear extends BattlegroundAnimal {
 		this.weight = 200 + rand.nextInt(801);
 		this.brain = brain;
 		brain.getSkills(skills, weight);
+		int total = 0;
+		boolean pos = true;
+		for(int i : skills)
+			if(i >= 0)
+				total += i;
+			else {
+				pos = false;
+				break;
+			}
+		if(pos && total < 50) {
+			this.vision = skills[0];
+			this.resistance = skills[1];
+			this.attack = skills[2];
+			this.digeff = skills[3];
+			this.respeff = skills[4];
+		}
+			
 	}
 
 	public void tick()
