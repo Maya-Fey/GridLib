@@ -55,6 +55,14 @@ public class PositionGrid {
 		this.grid = new int[width * height];
 	}
 	
+	public PositionGrid(int size, boolean b) 
+	{
+		this.width = size;
+		this.height = size;
+		this.grid = new int[size * size];
+		this.wrap = b;
+	}
+
 	public int getWidth()
 	{
 		return width;
@@ -237,6 +245,89 @@ public class PositionGrid {
 		grid[npos] = grid[pos];
 		grid[pos] = 0;
 		return npos;
+	}
+	
+	public int getMoveRel(int pos, int dir, int space)
+	{
+		if(dir == 0)
+			return pos;
+		int x = pos % width;
+		int y = pos / width;
+		boolean cx = (dir & 1) == 1; dir >>>= 1;
+		boolean cy = (dir & 1) == 1; dir >>>= 1;
+		if(wrap) {
+			if(cx) {
+				boolean neg = (dir & 1) == 0;
+				x = neg ? x - space : (x + space) % width;
+				if(x < 0)
+					x += width;
+			} dir >>>= 1;
+			if(cy) {
+				boolean neg = (dir & 1) == 0;
+				y = neg ? y - space : (y + space) % height;
+				if(y < 0)
+					y += height;
+			}
+		} else {
+			if(cx) {
+				boolean neg = (dir & 1) == 0;
+				x = neg ? x - space : x + space;
+				if(x < 0 || x >= width) {
+					grid[pos] = 0;
+					return -1;
+				}
+			} dir >>>= 1;
+			if(cy) {
+				boolean neg = (dir & 1) == 0;
+				y = neg ? y - space : y + space;
+				if(y < 0 || y >= width) {
+					grid[pos] = 0;
+					return -1;
+				}
+			}
+		}
+		return y * width + x;
+	}
+	
+	public int getMoveRel(int x, int y, int dir, int space)
+	{
+		if(dir == 0)
+			return  y * width + x;
+		int pos = y * width + x;
+		boolean cx = (dir & 1) == 1; dir >>>= 1;
+		boolean cy = (dir & 1) == 1; dir >>>= 1;
+		if(wrap) {
+			if(cx) {
+				boolean neg = (dir & 1) == 0;
+				x = neg ? x - space : (x + space) % width;
+				if(x < 0)
+					x += width;
+			} dir >>>= 1;
+			if(cy) {
+				boolean neg = (dir & 1) == 0;
+				y = neg ? y - space : (y + space) % height;
+				if(y < 0)
+					y += height;
+			}
+		} else {
+			if(cx) {
+				boolean neg = (dir & 1) == 0;
+				x = neg ? x - space : x + space;
+				if(x < 0 || x >= width) {
+					grid[pos] = 0;
+					return -1;
+				}
+			} dir >>>= 1;
+			if(cy) {
+				boolean neg = (dir & 1) == 0;
+				y = neg ? y - space : y + space;
+				if(y < 0 || y >= width) {
+					grid[pos] = 0;
+					return -1;
+				}
+			}
+		}
+		return y * width + x;
 	}
 	
 	/**
