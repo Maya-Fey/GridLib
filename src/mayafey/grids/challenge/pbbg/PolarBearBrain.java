@@ -23,6 +23,7 @@ public abstract class PolarBearBrain {
 	 * 4 = Respiratory Efficiency
 	 */
 	public abstract void getSkills(int[] arr, int weight);
+	public abstract void tick();
 	
 	void setAccess(PolarBearAccessObject access)
 	{

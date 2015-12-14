@@ -49,6 +49,7 @@ public class PolarBear extends BattlegroundAnimal {
 		sub *= 100 - respeff;
 		sub /= 100;
 		this.weight -= sub;
+		brain.tick();
 	}
 
 	public int attack()

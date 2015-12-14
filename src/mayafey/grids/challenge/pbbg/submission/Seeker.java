@@ -11,6 +11,8 @@ public class Seeker
 
 	private final int[] directions = new int[8];
 	
+	public void tick() {}
+	
 	public boolean defendAgainst(String type)
 	{
 		return true;
@@ -22,10 +24,37 @@ public class Seeker
 		int move = PositionGrid.NORTH; //Arbitrary default direction
 		for(int i = 0; i < view.getGivenSize(); i++) {
 			String type = view.getObj(i);
-			if(type == "Bear") {
-				
+			int x = view.getX(i),
+				y = view.getY(i);
+			int dir = toNumber(this.access.directionTo(x, y));
+			switch(type)
+			{
+				case "Bear":
+					directions[dir] = - 1;
+					break;
+				case "Walrus":
+					int dist0 = this.access.distanceTo(x, y) + 1;
+					if(directions[dir] != -1 && directions[dir] > dist0)
+						directions[dir] = dist0;
+					break;
+				case "Seal":
+				case "Carcass":
+					int dist1 = this.access.distanceTo(x, y);
+					if(directions[dir] != -1 && directions[dir] > dist1)
+						directions[dir] = dist1;
+					break;
+				case "Animal":
+					int dist2 = this.access.distanceTo(x, y) + 2;
+					if(directions[dir] != -1 && directions[dir] > dist2)
+						directions[dir] = dist2;
+					break;
 			}
 		}
+		int best = 9001;
+		for(int i = 0; i < 8; i++)
+			if(directions[i] > 0 || directions[i] < best) {
+				move = fromNumber(i);
+			}
 		return move;
 	}
 
@@ -35,7 +64,7 @@ public class Seeker
 		arr[PolarBearBrain.ATTACK] = 25;
 	}
 	
-	private int toNumber(int direction) 
+	private static int toNumber(int direction) 
 	{
 		switch(direction) 
 		{
@@ -60,7 +89,7 @@ public class Seeker
 		}
 	}
 	
-	private int fromNumber(int num)
+	private static int fromNumber(int num)
 	{
 		switch(num)
 		{
