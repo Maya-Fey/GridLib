@@ -23,7 +23,7 @@ public class Carcass extends BattlegroundAnimal {
 
 	public void tick() {}
 
-	public int attack()
+	public int getAttack()
 	{
 		return 0;
 	}
@@ -37,5 +37,7 @@ public class Carcass extends BattlegroundAnimal {
 	{
 		return "Carcass";
 	}
+
+	public void eat(int food) {}
 
 }

@@ -40,21 +40,24 @@ public class PolarBear extends BattlegroundAnimal {
 
 	public void tick()
 	{
-		this.heal(5);
+		this.regenerate(5 + (respeff / 7));
 		if(eaten > 0) {
-			this.heal(random.nextInt(6));
+			this.regenerate(random.nextInt(6));
 			eaten--;
 		}
-		int sub = 10 + random.nextInt(11);
+		int sub = 5 + random.nextInt(6);
 		sub *= 100 - respeff;
 		sub /= 100;
 		this.weight -= sub;
 		brain.tick();
 	}
 
-	public int attack()
+	public int getAttack()
 	{
-		return attack * 5 + (weight / 4);
+		int wdmg = weight / 4;
+		wdmg *= 100 + attack;
+		wdmg /= 100;
+		return attack * 2 + wdmg;
 	}
 	
 	public boolean defend(String animal)
@@ -75,12 +78,12 @@ public class PolarBear extends BattlegroundAnimal {
 	public void eat(int food)
 	{
 		eaten += random.nextInt(respeff);
-		food *= random.nextInt(51) + digeff;
+		food *= 20 + random.nextInt(31) + digeff;
 		food /= 100;
 		this.weight += food;
 	}
 	
-	public int getAttack()
+	public int getAttackSkill()
 	{
 		return this.attack;
 	}
