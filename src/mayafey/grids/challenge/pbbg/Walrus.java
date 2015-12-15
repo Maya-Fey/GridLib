@@ -21,10 +21,10 @@ public class Walrus extends BattlegroundAnimal {
 
 	public void tick() 
 	{
-		this.heal(5);
+		this.regenerate(5);
 	}
 
-	public int attack()
+	public int getAttack()
 	{
 		return 0;
 	}
@@ -37,6 +37,11 @@ public class Walrus extends BattlegroundAnimal {
 	public String getType()
 	{
 		return "Walrus";
+	}
+
+	public void eat(int food)
+	{
+		this.weight += food / 2; 
 	}
 
 }

@@ -13,7 +13,7 @@ public class Seal extends BattlegroundAnimal {
 		super(reader, rand);
 		this.vision = 18 + rand.nextInt(19);
 		this.resistance = 2;
-		this.weight = 100;
+		this.weight = 150 + rand.nextInt(151);
 	}
 
 	public boolean defend(String animal)
@@ -23,7 +23,7 @@ public class Seal extends BattlegroundAnimal {
 
 	public void tick() {}
 
-	public int attack()
+	public int getAttack()
 	{
 		return 0;
 	}
@@ -109,5 +109,8 @@ public class Seal extends BattlegroundAnimal {
 	{
 		return "Seal";
 	}
+	
+	@Override
+	public void eat(int food) {}
 
 }

@@ -24,16 +24,17 @@ public abstract class BattlegroundAnimal extends Animal {
 	
 	public abstract boolean defend(String animal);
 	public abstract void tick();
-	public abstract int attack();
+	public abstract int getAttack();
 	public abstract int getMove(GridView<String> view);
+	public abstract void eat(int food);
 	
-	public void damage(int damage)
+	public void attack(int damage)
 	{
-		damage *= 100;
-		damage /= 50 + random.nextInt(151);
+		damage *= 50 + random.nextInt(101);;
+		damage /= 100;
 		damage *= 100 - resistance;
 		damage /= 100;
-		this.health -= damage;
+		damage(damage);
 	}
 	
 	public int getWeight()
@@ -83,7 +84,7 @@ public abstract class BattlegroundAnimal extends Animal {
 	
 	public int getMaxHealth()
 	{
-		return this.weight / 5 + 10;
+		return this.weight;
 	}
 
 }
