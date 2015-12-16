@@ -36,28 +36,28 @@ public class ArcticViewer extends GridViewer<String, BattlegroundAnimal> {
 		int length = size * 2 + 1;
 		int gwidth = grid.getWidth();
 		int gheight = grid.getHeight();
-		int ID = ((skill + rand.nextInt(skill)) * (100 - intensity)) / 100;
+		int ID = ((skill + skill != 0 ? rand.nextInt(skill) : 0) * (100 - intensity)) / 100;
 		int x = pos & gwidth - size;
 		int y = pos / gwidth - size;
-		x = x < 0 ? x + gwidth : x > gwidth ? x -= gwidth : x;
-		y = y < 0 ? y + gheight : y > gheight ? y -= gheight : y;
+		x = x < 0 ? x + gwidth : x >= gwidth ? x -= gwidth : x;
+		y = y < 0 ? y + gheight : y >= gheight ? y -= gheight : y;
 		for(int i = 0; i < length; i++) {
 			scratch[i] = x;
 			x++;
-			x = x > gwidth ? x -= gwidth : x;
+			x = x >= gwidth ? x -= gwidth : x;
 		}
 		for(int i = 0; i < length; i++) {
 			for(int j = 0; j < length; j++) {
 				obj = grid.get(scratch[j], y);
 				if(obj != 0) {
-					BattlegroundAnimal animal = manager.getObj(pos);
+					BattlegroundAnimal animal = manager.getObj(obj);
 					if((ID + rand.nextInt(11)) > 10 + rand.nextInt(21))
 						view.add(animal.getType(), scratch[j], y);
 					else
 						view.add("Animal", scratch[j], y);
 				}
 			}
-			y++; y = y > gheight ? y -= gheight : y;
+			y++; y = y >= gheight ? y -= gheight : y;
 		}
 	}
 

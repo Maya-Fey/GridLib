@@ -1,5 +1,7 @@
 package mayafey.grids.challenge.pbbg;
 
+import java.util.Random;
+
 public class PolarBearAccessObject {
 	
 	private final PolarBear bear;
@@ -7,6 +9,11 @@ public class PolarBearAccessObject {
 	public PolarBearAccessObject(PolarBear bear) 
 	{
 		this.bear = bear;
+	}
+	
+	public Random getRandom()
+	{
+		return this.bear.random;
 	}
 	
 	public int[] getPos()
@@ -26,12 +33,12 @@ public class PolarBearAccessObject {
 	
 	public int getHealth()
 	{
-		return this.getHealth();
+		return bear.health;
 	}
 	
 	public int getMaxHealth()
 	{
-		return this.getMaxHealth();
+		return bear.getMaxHealth();
 	}
 	
 	public int getWeight()

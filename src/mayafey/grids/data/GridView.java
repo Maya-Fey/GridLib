@@ -75,17 +75,17 @@ public class GridView<Type> {
 	}
 	public void reset()
 	{
-		Arrays.fill(arr, 0, size, null);
-		Arrays.fill(x, 0, size, 0);
-		Arrays.fill(y, 0, size, 0);
-		size = 0;
+		Arrays.fill(arr, 0, givenSize, null);
+		Arrays.fill(x, 0, givenSize, 0);
+		Arrays.fill(y, 0, givenSize, 0);
+		givenSize = 0;
 	}
 	
 	public void add(Type obj, int x, int y)
 	{
-		   arr[size  ] = obj;
-		this.x[size  ] = x;
-		this.y[size++] = y;
+		   arr[givenSize  ] = obj;
+		this.x[givenSize  ] = x;
+		this.y[givenSize++] = y;
 	}
 	
 	public Iterator<GridPosition<Type>> iterator()

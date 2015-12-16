@@ -18,6 +18,8 @@ public class PolarBear extends BattlegroundAnimal {
 		super(reader, rand);
 		this.weight = 200 + rand.nextInt(801);
 		this.brain = brain;
+		this.health = this.getMaxHealth();
+		brain.setAccess(new PolarBearAccessObject(this));
 		brain.getSkills(skills, weight);
 		int total = 0;
 		boolean pos = true;
@@ -40,15 +42,22 @@ public class PolarBear extends BattlegroundAnimal {
 
 	public void tick()
 	{
-		this.regenerate(5 + (respeff / 7));
+		//A nonzero respiration will always result in a -1 modifier to attrition
+		int sub = 5 + random.nextInt(6) + (respeff > 0 ? 1 : 0);
+		if(respeff > 0) {
+			sub *= 100 - respeff + 1;
+			sub /= 100;
+		}
+		this.weight -= sub;
+		if(this.weight < 25) {
+			this.setAlive(false);
+			return;
+		}
+		this.regenerate(5 + (respeff / 2));
 		if(eaten > 0) {
 			this.regenerate(random.nextInt(6));
 			eaten--;
 		}
-		int sub = 5 + random.nextInt(6);
-		sub *= 100 - respeff;
-		sub /= 100;
-		this.weight -= sub;
 		brain.tick();
 	}
 
@@ -77,7 +86,7 @@ public class PolarBear extends BattlegroundAnimal {
 	
 	public void eat(int food)
 	{
-		eaten += random.nextInt(respeff);
+		eaten += 1 + respeff > 1 ? random.nextInt(respeff / 2) : 0;
 		food *= 20 + random.nextInt(31) + digeff;
 		food /= 100;
 		this.weight += food;

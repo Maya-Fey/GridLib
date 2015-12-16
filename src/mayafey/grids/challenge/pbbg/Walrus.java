@@ -16,7 +16,7 @@ public class Walrus extends BattlegroundAnimal {
 
 	public boolean defend(String animal)
 	{
-		return true;
+		return animal == "Seal";
 	}
 
 	public void tick() 
@@ -26,7 +26,7 @@ public class Walrus extends BattlegroundAnimal {
 
 	public int getAttack()
 	{
-		return 0;
+		return 1;
 	}
 
 	public int getMove(GridView<String> view)
