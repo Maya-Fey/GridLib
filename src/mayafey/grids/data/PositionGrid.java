@@ -34,6 +34,12 @@ public class PositionGrid {
 	private static final int INORTH   = ~012;
 	private static final int IEAST    = ~005;
 	
+	private static final int[] directions = new int[] 
+	{
+		STAY, NORTH, NORTHEAST, EAST, SOUTHEAST,
+		SOUTH, SOUTHWEST, WEST, NORTHWEST
+	};
+	
 	private final int width;
 	private final int height;
 	
@@ -330,6 +336,12 @@ public class PositionGrid {
 		return y * width + x;
 	}
 	
+	public String printPos(int pos)
+	{
+		return "(X: " + (pos % width) + ", Y:" + (pos / width) + ")";
+		
+	}
+	
 	/**
 	 * xy[0] = X
 	 * xy[1] = Y
@@ -398,6 +410,19 @@ public class PositionGrid {
 	public static int setWest(int dir)
 	{
 		return (dir & IEAST) | WEST;
+	}
+	
+	public static int directionFromNumber(int num)
+	{
+		return directions[num];
+	}
+	
+	public static int numberFromDirection(int num)
+	{
+		for(int i = 0; i < directions.length; i++)
+			if(directions[i] == num)
+				return i;
+		throw new java.lang.NullPointerException("That's no direction...");
 	}
 
 }

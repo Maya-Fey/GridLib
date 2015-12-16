@@ -10,8 +10,20 @@ public class Seeker
 	   extends PolarBearBrain {
 
 	private final int[] directions = new int[8];
+	private int def;
+	private int num = 0;
+	private static int kek = 0;
 	
-	public void tick() {}
+	public void init()
+	{
+		num = kek++;
+		def = fromNumber(this.access.getRandom().nextInt(8));
+	}
+	
+	public void tick() {
+		if(num == 0)
+		System.out.println(num + " has " + access.getWeight() + "kg in weight and has " + access.getHealth() + "/" + access.getMaxHealth() + " HP.");
+	}
 	
 	public boolean defendAgainst(String type)
 	{
@@ -21,12 +33,14 @@ public class Seeker
 	public int move(GridView<String> view)
 	{
 		Arrays.fill(directions, -1);
-		int move = PositionGrid.NORTH; //Arbitrary default direction
+		int move = def; //Arbitrary default direction
 		for(int i = 0; i < view.getGivenSize(); i++) {
 			String type = view.getObj(i);
 			int x = view.getX(i),
 				y = view.getY(i);
 			int dir = toNumber(this.access.directionTo(x, y));
+			if(dir == -1)
+				continue;
 			switch(type)
 			{
 				case "Bear":

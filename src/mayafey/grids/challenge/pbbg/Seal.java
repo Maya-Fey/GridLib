@@ -7,13 +7,16 @@ import mayafey.grids.data.GridView;
 import mayafey.grids.data.PositionGrid;
 
 public class Seal extends BattlegroundAnimal {
+	
+	private final int def;
 
 	public Seal(GridReader reader, Random rand)
 	{
 		super(reader, rand);
-		this.vision = 18 + rand.nextInt(19);
-		this.resistance = 2;
+		this.vision = 50 + rand.nextInt(16);
+		this.resistance = 4;
 		this.weight = 150 + rand.nextInt(151);
+		this.def = PositionGrid.directionFromNumber(1 + rand.nextInt(8));
 	}
 
 	public boolean defend(String animal)
@@ -75,7 +78,7 @@ public class Seal extends BattlegroundAnimal {
 			}
 			i++;
 		}
-		int go = PositionGrid.STAY;
+		int go = def;
 		if(move) {
 			if(!(east && west)) {
 				if(east)

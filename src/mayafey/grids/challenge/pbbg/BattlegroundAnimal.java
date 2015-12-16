@@ -28,6 +28,19 @@ public abstract class BattlegroundAnimal extends Animal {
 	public abstract int getMove(GridView<String> view);
 	public abstract void eat(int food);
 	
+	public void update(int x, int y)
+	{
+		pos[0] = x;
+		pos[1] = y;
+		this.tick();
+	}
+	
+	public int[] update()
+	{
+		this.tick();
+		return pos;
+	}
+	
 	public void attack(int damage)
 	{
 		damage *= 50 + random.nextInt(101);;
@@ -85,6 +98,11 @@ public abstract class BattlegroundAnimal extends Animal {
 	public int getMaxHealth()
 	{
 		return this.weight;
+	}
+	
+	public int getResistDamage()
+	{
+		return resistance != 0 ? random.nextInt(resistance) : 0;
 	}
 
 }

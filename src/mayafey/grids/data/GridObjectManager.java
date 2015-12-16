@@ -33,6 +33,16 @@ public class GridObjectManager<Type> {
 		this.pos = new int[size];
 	}
 	
+	public void remove(int pos)
+	{
+		grid.set(this.pos[pos], 0);
+	}
+	
+	public void replace(Type obj, int pos)
+	{
+		arr[pos] = obj;
+	}
+	
 	public void add(Type obj, int pos)
 	{
 		grid.set(pos, cur);

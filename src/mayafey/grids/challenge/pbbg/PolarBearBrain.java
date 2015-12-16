@@ -12,6 +12,11 @@ public abstract class PolarBearBrain {
 
 	protected PolarBearAccessObject access;
 	
+	/**
+	 * The type of the attacker/defender is given, return true to attack
+	 * or false to defend. Attacking means you deal more damage but suffer 
+	 * enemy resistance damage.
+	 */
 	public abstract boolean defendAgainst(String type);
 	public abstract int move(GridView<String> view);
 	
@@ -39,14 +44,28 @@ public abstract class PolarBearBrain {
 	 * 20% - 50%<br>
 	 * <b>Respiratory Efficiency</b> decreases the amount of weight lost to attrition
 	 * each tick of the game and increases regeneration. Each point reduces attrition by
-	 * -1% and every five points increases regeneration by 1 point per round.
+	 * -1% and every two points increases regeneration by 1 point per round. Default 
+	 * regeneration is 5 points plus an additional 0 - 5 points if you've recently eaten.
+	 * The 'recently eaten' period lasts for one turn plus an average of 0.25 turns for every
+	 * point in respiratory efficiency.
 	 */
 	public abstract void getSkills(int[] arr, int weight);
+	
+	/**
+	 * This method is called at the start of each tick, after regeneration but before
+	 * moves.
+	 */
 	public abstract void tick();
+	
+	/**
+	 * Called when this object receives its access object.
+	 */
+	protected abstract void init();
 	
 	final void setAccess(PolarBearAccessObject access)
 	{
 		this.access = access;
+		init();
 	}
 	
 	protected final PolarBearAccessObject getAccess()
