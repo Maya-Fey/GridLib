@@ -13,10 +13,11 @@ public class Seal extends BattlegroundAnimal {
 	public Seal(GridReader reader, Random rand)
 	{
 		super(reader, rand);
-		this.vision = 50 + rand.nextInt(16);
+		this.vision = 20 + rand.nextInt(16);
 		this.resistance = 4;
 		this.weight = 150 + rand.nextInt(151);
 		this.def = PositionGrid.directionFromNumber(1 + rand.nextInt(8));
+		this.health = this.getMaxHealth();
 	}
 
 	public boolean defend(String animal)

@@ -21,7 +21,7 @@ public class Seeker
 	}
 	
 	public void tick() {
-		if(num == 0)
+		if(num == -1)
 		System.out.println(num + " has " + access.getWeight() + "kg in weight and has " + access.getHealth() + "/" + access.getMaxHealth() + " HP.");
 	}
 	
@@ -32,12 +32,14 @@ public class Seeker
 
 	public int move(GridView<String> view)
 	{
+		System.out.println("==================");
 		Arrays.fill(directions, -1);
 		int move = def; //Arbitrary default direction
 		for(int i = 0; i < view.getGivenSize(); i++) {
 			String type = view.getObj(i);
 			int x = view.getX(i),
 				y = view.getY(i);
+			System.out.println(type + " at (X: " + x + ", Y: " + y + "), " + this.access.distanceTo(x, y) + " away.");
 			int dir = toNumber(this.access.directionTo(x, y));
 			if(dir == -1)
 				continue;
@@ -66,7 +68,8 @@ public class Seeker
 		}
 		int best = 9001;
 		for(int i = 0; i < 8; i++)
-			if(directions[i] > 0 || directions[i] < best) {
+			if(directions[i] > 0 && directions[i] < best) {
+				System.out.println("It worked!");
 				move = fromNumber(i);
 			}
 		return move;

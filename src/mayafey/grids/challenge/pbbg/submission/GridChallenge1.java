@@ -49,8 +49,8 @@ public class GridChallenge1 {
 		/*
 		 * 100 Bears, 100 Walrus, 100 Seals per competitor, 1 Animal per 10 squares:
 		 */
-		int size = ((int) Math.sqrt(competitors.length * 3000)) + 1;
-		int players = 300 * competitors.length;
+		int size = ((int) Math.sqrt(competitors.length * 300)) + 1;
+		int players = 30 * competitors.length;
 		PositionGrid grid = new PositionGrid(size, true);
 		GridObjectManager<BattlegroundAnimal> manager = new GridObjectManager<BattlegroundAnimal>(grid, new BattlegroundAnimal[players]);
 		GridReader reader = new GridReader(grid);
@@ -59,7 +59,7 @@ public class GridChallenge1 {
 		int[] skills = new int[5];
 		for(Constructor<PolarBearBrain> con : cons) 
 		{
-			for(int i = 0; i < 100; i++) 
+			for(int i = 0; i < 10; i++) 
 			{
 				manager.add(new Seal(reader, rand), pos += 10);
 				manager.add(new Walrus(reader, rand), pos += 10);
@@ -72,29 +72,38 @@ public class GridChallenge1 {
 		int c = 0;
 		while(true)
 		{
-			if(c++ > 10000)
+			if(c++ > 10)
 				break;
-			/*
+			//*
 			for(int i = 0; i < grid.getHeight(); i++) {
-				System.out.print("[");
 				for(int j = 0; j < grid.getWidth(); j++) {
 					int ref = grid.get(j, i);
 					if(ref == 0)
-						System.out.print(" ][");
+						System.out.print("[ ]");
 					else
-						System.out.print(manager.getObj(ref).getType().toCharArray()[0] + "][");
+						System.out.print("[" + manager.getObj(ref).getType().toCharArray()[0] + "]");
 				}
-				System.out.println("]");
+				System.out.println();
 			}
 			System.out.println();
 			//*/
+			boolean on = false;
 			int j = 0;
-			for(int i = 0; i < players; i++)
-				if(manager.getObj(i).isAlive()) {
+			for(int i = 0; i < players; i++) {
+				BattlegroundAnimal obj = manager.getObj(i);
+				if(obj.isAlive()) {
 					int[] xy = manager.getObj(i).update();
 					grid.getXY(manager.getPos(i), xy);
 					j++;
+					if(obj.getType() == "Bear")
+						on |= true;
+				} else {
+					manager.remove(i);
 				}
+				
+			}
+			if(!on)
+				break;
 			//System.out.println(j);
 			viewer.updateStorm();
 			for(int i = 0; i < players; i++)
@@ -104,7 +113,9 @@ public class GridChallenge1 {
 					viewer.view(view, i);
 					int npos = grid.getMoveRel(manager.getPos(i), player.getMove(view), 1);
 					int to = grid.get(npos);
-					if(to != 0 && to != i) {
+					if(to == i)
+						continue;
+					if(to != 0) {
 						BattlegroundAnimal opponent = manager.getObj(to);
 						boolean fp = player.defend(opponent.getType());
 						boolean fo = opponent.defend(player.getType());

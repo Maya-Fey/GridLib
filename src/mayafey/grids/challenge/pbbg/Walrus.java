@@ -12,6 +12,7 @@ public class Walrus extends BattlegroundAnimal {
 		this.vision = 0;
 		this.resistance = 20 + rand.nextInt(21);
 		this.weight = 400;
+		this.health = this.getMaxHealth();
 	}
 
 	public boolean defend(String animal)

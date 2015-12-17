@@ -12,8 +12,8 @@ public class Carcass extends BattlegroundAnimal {
 		this.resistance = 0;
 		this.vision = 0;
 		this.weight = weight;
-		this.health = 0;
-		this.setAlive(false);
+		this.health = 1;
+		this.setAlive(true);
 	}
 
 	public boolean defend(String animal)
