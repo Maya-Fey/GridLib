@@ -19,6 +19,8 @@ public class GridReader {
 		int dy2 = (y1 + grid.getHeight()) - y2;
 		dx2 = dx2 < 0 ? ~dx2 + 1 : dx2;
 		dy2 = dy2 < 0 ? ~dy2 + 1 : dy2;
+		System.out.println("(X: " + x1 + ", Y: " + y1 + ")");
+		System.out.println(dx1 + " vs " + dx2 + " || " + dy1 + " vs " + dy2);
 		if(dx2 < dx1)
 			dx1 = dx2;
 		if(dy2 < dy1)

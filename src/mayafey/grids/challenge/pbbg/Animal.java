@@ -29,7 +29,7 @@ public abstract class Animal {
 		return this.alive;
 	}
 	
-	public final void setAlive(boolean alive)
+	public void setAlive(boolean alive)
 	{
 		this.alive = alive;
 	}
