@@ -30,13 +30,13 @@ public class PolarBear extends BattlegroundAnimal {
 				pos = false;
 				break;
 			}
-		if(pos && total < 50) {
+		if(pos && total <= 50) {
 			this.vision = skills[0];
 			this.resistance = skills[1];
 			this.attack = skills[2];
 			this.digeff = skills[3];
 			this.respeff = skills[4];
-		}
+		} 
 			
 	}
 

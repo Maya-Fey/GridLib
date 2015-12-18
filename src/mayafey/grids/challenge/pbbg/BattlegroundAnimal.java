@@ -97,12 +97,12 @@ public abstract class BattlegroundAnimal extends Animal {
 	
 	public int getMaxHealth()
 	{
-		return this.weight;
+		return this.weight / 2;
 	}
 	
 	public int getResistDamage()
 	{
-		return resistance != 0 ? random.nextInt(resistance) : 0;
+		return resistance != 0 ? random.nextInt(resistance + 10) : 0;
 	}
 
 	public void setAlive(boolean b)

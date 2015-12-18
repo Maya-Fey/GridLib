@@ -1,5 +1,7 @@
 package mayafey.grids.data;
 
+import java.util.Arrays;
+
 public class PositionGrid {
 	
 	private static final String[] names = new String[] {
@@ -67,6 +69,11 @@ public class PositionGrid {
 		this.height = size;
 		this.grid = new int[size * size];
 		this.wrap = b;
+	}
+	
+	public void fill(int filler)
+	{
+		Arrays.fill(grid, filler);
 	}
 
 	public int getWidth()
@@ -379,7 +386,7 @@ public class PositionGrid {
 	
 	public static boolean goesSouth(int dir)
 	{
-		return (dir & SOUTH) == SOUTH; 
+		return (dir & NORTH) == SOUTH; 
 	}
 	
 	public static boolean goesEast(int dir)
@@ -389,7 +396,7 @@ public class PositionGrid {
 	
 	public static boolean goesWest(int dir)
 	{
-		return (dir & WEST) == WEST; 
+		return (dir & EAST) == WEST; 
 	}
 	
 	public static int setNorth(int dir)

@@ -21,7 +21,7 @@ public class Seeker
 	}
 	
 	public void tick() {
-		if(num == -1)
+		//if(num == -1)
 		System.out.println(num + " has " + access.getWeight() + "kg in weight and has " + access.getHealth() + "/" + access.getMaxHealth() + " HP.");
 	}
 	
@@ -32,46 +32,43 @@ public class Seeker
 
 	public int move(GridView<String> view)
 	{
-		System.out.println("==================");
-		Arrays.fill(directions, -1);
+		Arrays.fill(directions, 9001);
 		int move = def; //Arbitrary default direction
 		for(int i = 0; i < view.getGivenSize(); i++) {
 			String type = view.getObj(i);
 			int x = view.getX(i),
 				y = view.getY(i);
-			System.out.println(type + " at (X: " + x + ", Y: " + y + "), " + this.access.distanceTo(x, y) + " away.");
 			int dir = toNumber(this.access.directionTo(x, y));
 			if(dir == -1)
 				continue;
+			int modifier = 0;
 			switch(type)
 			{
 				case "Bear":
-					directions[dir] = - 1;
-					break;
-				case "Walrus":
-					int dist0 = this.access.distanceTo(x, y) + 1;
-					if(directions[dir] != -1 && directions[dir] > dist0)
-						directions[dir] = dist0;
-					break;
-				case "Seal":
-				case "Carcass":
-					int dist1 = this.access.distanceTo(x, y);
-					if(directions[dir] != -1 && directions[dir] > dist1)
-						directions[dir] = dist1;
+					modifier = 3;
 					break;
 				case "Animal":
-					int dist2 = this.access.distanceTo(x, y) + 2;
-					if(directions[dir] != -1 && directions[dir] > dist2)
-						directions[dir] = dist2;
+					modifier = 2;
 					break;
+				case "Walrus":
+					modifier = 1;
+					break;
+				case "Seal":
+					break;
+				case "Carcass":
+					modifier = -1;
+					break;			
 			}
+			int dist2 = this.access.distanceTo(x, y) + modifier;
+			if(directions[dir] > dist2)
+				directions[dir] = dist2;
 		}
-		int best = 9001;
+		int best = 9000;
 		for(int i = 0; i < 8; i++)
-			if(directions[i] > 0 && directions[i] < best) {
-				System.out.println("It worked!");
+			if(directions[i] < best) {
 				move = fromNumber(i);
-			}
+				best = directions[i];
+			} 
 		return move;
 	}
 

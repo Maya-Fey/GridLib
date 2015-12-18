@@ -7,16 +7,13 @@ import mayafey.grids.data.GridView;
 import mayafey.grids.data.PositionGrid;
 
 public class Seal extends BattlegroundAnimal {
-	
-	private final int def;
 
 	public Seal(GridReader reader, Random rand)
 	{
 		super(reader, rand);
-		this.vision = 20 + rand.nextInt(16);
+		this.vision = 20 + rand.nextInt(21);
 		this.resistance = 4;
 		this.weight = 150 + rand.nextInt(151);
-		this.def = PositionGrid.directionFromNumber(1 + rand.nextInt(8));
 		this.health = this.getMaxHealth();
 	}
 
@@ -46,6 +43,7 @@ public class Seal extends BattlegroundAnimal {
 			   dnorth = 0,
 			   dsouth = 0;
 		int i = 0;
+		System.out.println("I am at (X: " + this.getX() + ", Y: " + this.getY() + ")");
 		while(i < view.getGivenSize()) {
 			String animal = view.getObj(i);
 			if(animal != "Bear") {
@@ -57,6 +55,7 @@ public class Seal extends BattlegroundAnimal {
 			int ay = view.getY(i);
 			int dist = reader.distanceFrom(x, ax, y, ay);
 			int dir = reader.getDirection(x, ax, y, ay);
+			System.out.println("Bear at (X: " + ax + ", Y: " + ay + ") - " + dist + " squares to the " + PositionGrid.getDirection(dir));
 			if(PositionGrid.goesEast(dir)) {
 				east |= true;
 				if(dist < deast)
@@ -78,16 +77,16 @@ public class Seal extends BattlegroundAnimal {
 					dsouth = dist;
 			}
 			i++;
-		}
-		int go = def;
+		} 
+		int go = 0;
 		if(move) {
-			if(!(east && west)) {
+			if(east ^ west) {
 				if(east)
 					go = PositionGrid.setWest(go);
 				else
 					go = PositionGrid.setEast(go);
 			}
-			if(!(north && south)) {
+			if(north ^ south) {
 				if(north)
 					go = PositionGrid.setSouth(go);
 				else
@@ -106,6 +105,7 @@ public class Seal extends BattlegroundAnimal {
 						go = PositionGrid.setSouth(go);
 			}
 		}
+		System.out.println("I have decided to go " + PositionGrid.getDirection(go));
 		return go;
 	}
 
