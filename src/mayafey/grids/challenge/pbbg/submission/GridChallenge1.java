@@ -52,7 +52,7 @@ public class GridChallenge1 {
 		int size = ((int) Math.sqrt(competitors.length * 300)) + 1;
 		int players = 30 * competitors.length;
 		PositionGrid grid = new PositionGrid(size, true);
-		GridObjectManager<BattlegroundAnimal> manager = new GridObjectManager<BattlegroundAnimal>(grid, new BattlegroundAnimal[players]);
+		GridObjectManager<BattlegroundAnimal> manager = new GridObjectManager<BattlegroundAnimal>(grid, new BattlegroundAnimal[players + 1]);
 		GridReader reader = new GridReader(grid);
 		Random rand = new Random(42);
 		int pos = 0;
@@ -89,7 +89,7 @@ public class GridChallenge1 {
 			//*/
 			boolean on = false;
 			int j = 0;
-			for(int i = 0; i < players; i++) {
+			for(int i = 1; i < players; i++) {
 				BattlegroundAnimal obj = manager.getObj(i);
 				if(obj.isAlive()) {
 					int[] xy = manager.getObj(i).update();
@@ -106,7 +106,7 @@ public class GridChallenge1 {
 				break;
 			//System.out.println(j);
 			viewer.updateStorm();
-			for(int i = 0; i < players; i++)
+			for(int i = 1; i < players; i++)
 			{
 				BattlegroundAnimal player = manager.getObj(i);
 				if(player.isAlive()) {

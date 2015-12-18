@@ -22,7 +22,7 @@ public class ArcticViewer extends GridViewer<String, BattlegroundAnimal> {
 	
 	public void updateStorm()
 	{
-		this.intensity = rand.nextInt(51);
+		this.intensity = 1 + rand.nextInt(50);
 	}
 
 	public void view(GridView<String> view, int obj)
@@ -31,13 +31,13 @@ public class ArcticViewer extends GridViewer<String, BattlegroundAnimal> {
 		BattlegroundAnimal viewer = manager.getObj(obj);
 		int pos = manager.getPos(obj);
 		int skill = viewer.getVision();
-		skill += rand.nextInt(19);
-		int size = skill / 7;
+		skill += rand.nextInt(23);
+		int size = skill / 10;
 		int length = size * 2 + 1;
 		int gwidth = grid.getWidth();
 		int gheight = grid.getHeight();
-		int ID = ((skill + skill != 0 ? rand.nextInt(skill) : 0) * (100 - intensity)) / 100;
-		int x = pos & gwidth - size;
+		int ID = skill + (skill != 0 ? rand.nextInt(skill) : 0) + 1;
+		int x = pos % gwidth - size;
 		int y = pos / gwidth - size;
 		x = x < 0 ? x + gwidth : x >= gwidth ? x -= gwidth : x;
 		y = y < 0 ? y + gheight : y >= gheight ? y -= gheight : y;
@@ -51,7 +51,7 @@ public class ArcticViewer extends GridViewer<String, BattlegroundAnimal> {
 				obj = grid.get(scratch[j], y);
 				if(obj != 0) {
 					BattlegroundAnimal animal = manager.getObj(obj);
-					if((ID + rand.nextInt(11)) > 10 + rand.nextInt(21))
+					if(rand.nextInt(ID) > 5 + rand.nextInt(intensity))
 						view.add(animal.getType(), scratch[j], y);
 					else
 						view.add("Animal", scratch[j], y);

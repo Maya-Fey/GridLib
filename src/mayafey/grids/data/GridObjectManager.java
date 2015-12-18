@@ -8,7 +8,7 @@ public class GridObjectManager<Type> {
 	private final Type[] arr;
 	private final int[] pos;
 	
-	private int cur = 0;
+	private int cur = 1;
 	
 	public GridObjectManager(PositionGrid grid, Type[] arr)
 	{
