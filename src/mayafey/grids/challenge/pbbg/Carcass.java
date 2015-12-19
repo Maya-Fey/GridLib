@@ -37,6 +37,11 @@ public class Carcass extends BattlegroundAnimal {
 	{
 		return "Carcass";
 	}
+	
+	public char getTypeChar()
+	{
+		return 'C';
+	}
 
 	public void eat(int food) {}
 
