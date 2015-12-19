@@ -22,7 +22,7 @@ public class Seeker
 	
 	public void tick() {
 		//if(num == -1)
-		System.out.println(num + " has " + access.getWeight() + "kg in weight and has " + access.getHealth() + "/" + access.getMaxHealth() + " HP.");
+		System.out.println(num + " (at X: " + access.getX() + ", Y: " + access.getY() + ") has " + access.getWeight() + "kg in weight and has " + access.getHealth() + "/" + access.getMaxHealth() + " HP.");
 	}
 	
 	public boolean defendAgainst(String type)

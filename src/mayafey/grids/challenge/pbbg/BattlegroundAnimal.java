@@ -107,7 +107,6 @@ public abstract class BattlegroundAnimal extends Animal {
 
 	public void setAlive(boolean b)
 	{
-		System.out.println("This " + this.getType() + " is being set " + (b ? "Alive" : "Dead") + " with  " + this.health + "/" + this.getMaxHealth() + " HP");
 		super.setAlive(b);
 	}
 }
