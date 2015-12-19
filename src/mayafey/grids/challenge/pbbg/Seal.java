@@ -116,6 +116,11 @@ public class Seal extends BattlegroundAnimal {
 		return "Seal";
 	}
 	
+	public char getTypeChar()
+	{
+		return 'S';
+	}
+	
 	public void eat(int food)
 	{
 		this.weight += food / 10;

@@ -44,6 +44,11 @@ public class Walrus extends BattlegroundAnimal {
 	{
 		return "Walrus";
 	}
+	
+	public char getTypeChar()
+	{
+		return 'W';
+	}
 
 	public void eat(int food)
 	{

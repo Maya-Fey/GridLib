@@ -39,6 +39,7 @@ public abstract class Animal {
 		return this.health;
 	}
 	
+	public abstract char getTypeChar();
 	public abstract String getType();
 	public abstract int getMaxHealth();
 	
