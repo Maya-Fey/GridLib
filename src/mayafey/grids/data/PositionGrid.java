@@ -1,5 +1,7 @@
 package mayafey.grids.data;
 
+import java.util.Arrays;
+
 public class PositionGrid {
 	
 	private static final String[] names = new String[] {
@@ -21,15 +23,24 @@ public class PositionGrid {
 		"Northeast"  //017
 	};
 	
-	public static final int STAY      = 000;
-	public static final int NORTH     = 012;
-	public static final int NORTHEAST = 017;
-	public static final int EAST      = 005;
-	public static final int SOUTHEAST = 007;
-	public static final int SOUTH     = 002;
-	public static final int SOUTHWEST = 003;
-	public static final int WEST      = 001;
-	public static final int NORTHWEST = 013;
+	public static final int STAY      =  000;
+	public static final int NORTH     =  012;
+	public static final int NORTHEAST =  017;
+	public static final int EAST      =  005;
+	public static final int SOUTHEAST =  007;
+	public static final int SOUTH     =  002;
+	public static final int SOUTHWEST =  003;
+	public static final int WEST      =  001;
+	public static final int NORTHWEST =  013;
+	
+	private static final int INORTH   = ~012;
+	private static final int IEAST    = ~005;
+	
+	private static final int[] directions = new int[] 
+	{
+		STAY, NORTH, NORTHEAST, EAST, SOUTHEAST,
+		SOUTH, SOUTHWEST, WEST, NORTHWEST
+	};
 	
 	private final int width;
 	private final int height;
@@ -52,6 +63,19 @@ public class PositionGrid {
 		this.grid = new int[width * height];
 	}
 	
+	public PositionGrid(int size, boolean b) 
+	{
+		this.width = size;
+		this.height = size;
+		this.grid = new int[size * size];
+		this.wrap = b;
+	}
+	
+	public void fill(int filler)
+	{
+		Arrays.fill(grid, filler);
+	}
+
 	public int getWidth()
 	{
 		return width;
@@ -236,6 +260,86 @@ public class PositionGrid {
 		return npos;
 	}
 	
+	public int getMoveRel(int pos, int dir, int space)
+	{
+		if(dir == 0)
+			return pos;
+		int x = pos % width;
+		int y = pos / width;
+		boolean cx = (dir & 1) == 1; dir >>>= 1;
+		boolean cy = (dir & 1) == 1; dir >>>= 1;
+		if(wrap) {
+			if(cx) {
+				boolean neg = (dir & 1) == 0;
+				x = neg ? x - space : (x + space) % width;
+				if(x < 0)
+					x += width;
+			} dir >>>= 1;
+			if(cy) {
+				boolean neg = (dir & 1) == 0;
+				y = neg ? y - space : (y + space) % height;
+				if(y < 0)
+					y += height;
+			}
+		} else {
+			if(cx) {
+				boolean neg = (dir & 1) == 0;
+				x = neg ? x - space : x + space;
+				if(x < 0 || x >= width)
+					return -1;
+			} dir >>>= 1;
+			if(cy) {
+				boolean neg = (dir & 1) == 0;
+				y = neg ? y - space : y + space;
+				if(y < 0 || y >= width) 
+					return -1;
+			}
+		}
+		return y * width + x;
+	}
+	
+	public int getMoveRel(int x, int y, int dir, int space)
+	{
+		if(dir == 0)
+			return  y * width + x;
+		boolean cx = (dir & 1) == 1; dir >>>= 1;
+		boolean cy = (dir & 1) == 1; dir >>>= 1;
+		if(wrap) {
+			if(cx) {
+				boolean neg = (dir & 1) == 0;
+				x = neg ? x - space : (x + space) % width;
+				if(x < 0)
+					x += width;
+			} dir >>>= 1;
+			if(cy) {
+				boolean neg = (dir & 1) == 0;
+				y = neg ? y - space : (y + space) % height;
+				if(y < 0)
+					y += height;
+			}
+		} else {
+			if(cx) {
+				boolean neg = (dir & 1) == 0;
+				x = neg ? x - space : x + space;
+				if(x < 0 || x >= width)
+					return -1;
+			} dir >>>= 1;
+			if(cy) {
+				boolean neg = (dir & 1) == 0;
+				y = neg ? y - space : y + space;
+				if(y < 0 || y >= width)
+					return -1;
+			}
+		}
+		return y * width + x;
+	}
+	
+	public String printPos(int pos)
+	{
+		return "(X: " + (pos % width) + ", Y:" + (pos / width) + ")";
+		
+	}
+	
 	/**
 	 * xy[0] = X
 	 * xy[1] = Y
@@ -264,6 +368,59 @@ public class PositionGrid {
 	public static String getDirection(int pos)
 	{
 		return names[pos];
+	}
+	
+	public static boolean goesNorth(int dir)
+	{
+		return (dir & NORTH) == NORTH; 
+	}
+	
+	public static boolean goesSouth(int dir)
+	{
+		return (dir & NORTH) == SOUTH; 
+	}
+	
+	public static boolean goesEast(int dir)
+	{
+		return (dir & EAST) == EAST; 
+	}
+	
+	public static boolean goesWest(int dir)
+	{
+		return (dir & EAST) == WEST; 
+	}
+	
+	public static int setNorth(int dir)
+	{
+		return dir | NORTH;
+	}
+	
+	public static int setSouth(int dir)
+	{
+		return (dir & INORTH) | SOUTH;
+	}
+	
+	public static int setEast(int dir)
+	{
+		return dir | EAST;
+	}
+	
+	public static int setWest(int dir)
+	{
+		return (dir & IEAST) | WEST;
+	}
+	
+	public static int directionFromNumber(int num)
+	{
+		return directions[num];
+	}
+	
+	public static int numberFromDirection(int num)
+	{
+		for(int i = 0; i < directions.length; i++)
+			if(directions[i] == num)
+				return i;
+		throw new java.lang.NullPointerException("That's no direction...");
 	}
 
 }

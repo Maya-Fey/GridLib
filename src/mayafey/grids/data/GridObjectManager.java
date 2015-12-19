@@ -8,7 +8,7 @@ public class GridObjectManager<Type> {
 	private final Type[] arr;
 	private final int[] pos;
 	
-	private int cur = 0;
+	private int cur = 1;
 	
 	public GridObjectManager(PositionGrid grid, Type[] arr)
 	{
@@ -31,6 +31,16 @@ public class GridObjectManager<Type> {
 		this.grid = grid;
 		this.arr = (Type[]) Array.newInstance(type, size);
 		this.pos = new int[size];
+	}
+	
+	public void remove(int pos)
+	{
+		grid.set(this.pos[pos], 0);
+	}
+	
+	public void replace(Type obj, int pos)
+	{
+		arr[pos] = obj;
 	}
 	
 	public void add(Type obj, int pos)
