@@ -73,6 +73,7 @@ public class GridView<Type> {
 	{
 		return new GridPosition<Type>(arr[pos], x[pos], y[pos]);
 	}
+	
 	public void reset()
 	{
 		Arrays.fill(arr, 0, givenSize, null);

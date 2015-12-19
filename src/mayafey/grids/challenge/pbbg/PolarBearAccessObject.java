@@ -58,7 +58,7 @@ public class PolarBearAccessObject {
 	
 	public int getAttack()
 	{
-		return bear.getAttack();
+		return bear.getAttackSkill();
 	}
 	
 	public int getDigestiveEfficiency()

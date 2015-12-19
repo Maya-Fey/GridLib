@@ -15,11 +15,13 @@ public abstract class BattlegroundAnimal extends Animal {
 	
 	protected final Random random;
 	protected final GridReader reader;
+	protected final int team;
 	
-	public BattlegroundAnimal(GridReader reader, Random rand)
+	public BattlegroundAnimal(GridReader reader, Random rand, int team)
 	{
 		this.reader = reader;
 		this.random = rand;
+		this.team = team;
 	}
 	
 	public abstract boolean defend(String animal);
@@ -28,16 +30,8 @@ public abstract class BattlegroundAnimal extends Animal {
 	public abstract int getMove(GridView<String> view);
 	public abstract void eat(int food);
 	
-	public void update(int x, int y)
-	{
-		pos[0] = x;
-		pos[1] = y;
-		this.tick();
-	}
-	
 	public int[] update()
 	{
-		this.tick();
 		return pos;
 	}
 	
@@ -108,5 +102,10 @@ public abstract class BattlegroundAnimal extends Animal {
 	public void setAlive(boolean b)
 	{
 		super.setAlive(b);
+	}
+	
+	public final int getTeam()
+	{
+		return this.team;
 	}
 }

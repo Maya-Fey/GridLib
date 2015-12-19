@@ -23,6 +23,12 @@ public class GridChallenge1 {
 			Seeker.class
 		};
 	
+	private static final String[] teams = new String[] 
+		{
+			"Klingon Search and Destroy Team",
+			"Walrus King"
+		};
+	
 	private static final Class<?>[] args = new Class[0];
 
 	@SuppressWarnings("unchecked")
@@ -49,32 +55,48 @@ public class GridChallenge1 {
 		/*
 		 * 100 Bears, 100 Walrus, 100 Seals per competitor, 1 Animal per 10 squares:
 		 */
-		int size = ((int) Math.sqrt(competitors.length * 150)) + 1;
-		int players = 15 * competitors.length;
+		int size = ((int) Math.sqrt(competitors.length * 3000)) + 1;
+		int players = 300 * competitors.length;
 		PositionGrid grid = new PositionGrid(size, true);
 		GridObjectManager<BattlegroundAnimal> manager = new GridObjectManager<BattlegroundAnimal>(grid, new BattlegroundAnimal[players + 1]);
 		GridReader reader = new GridReader(grid);
 		Random rand = new Random(42);
 		int pos = 0;
+		long[] scores = new long[teams.length];
 		int[] skills = new int[5];
-		for(Constructor<PolarBearBrain> con : cons) 
+		for(int i = 0; i < 100; i++) 
 		{
-			for(int i = 0; i < 5; i++) 
+			for(int j = 0; j < cons.length; j++) 
 			{
-				manager.add(new Seal(reader, rand), (pos += 10) - rand.nextInt(10));
-				manager.add(new Walrus(reader, rand), (pos += 10) - rand.nextInt(10));
-				manager.add(new PolarBear(reader, rand, con.newInstance(), skills), (pos += 10) - rand.nextInt(10));
+				manager.add(new Seal(reader, rand, competitors.length), (pos += 10) - rand.nextInt(10));
+				manager.add(new Walrus(reader, rand, competitors.length), (pos += 10) - rand.nextInt(10));
+				manager.add(new PolarBear(reader, rand, cons[j].newInstance(), skills, j), (pos += 10) - rand.nextInt(10));
 				Arrays.fill(skills, 0);
 			}
 		}
-		GridView<String> view = new GridView<String>(new String[128]);
+		GridView<String> view = new GridView<String>(new String[172]);
 		ArcticViewer viewer = new ArcticViewer(grid, manager, rand);
 		int c = 0;
 		while(true)
 		{
-			if(c++ > 12)
+			if(c++ > 1000)
 				break;
-			//*
+			
+			boolean on = false;
+			for(int i = 1; i <= players; i++) {
+				BattlegroundAnimal obj = manager.getObj(i);
+				if(obj.isAlive()) {
+					scores[obj.getTeam()] += obj.getWeight();
+					grid.getXY(manager.getPos(i), obj.update());
+					obj.tick();
+					if(obj.getType() == "Bear")
+						on |= true;
+				} 
+			}
+			if(!on)
+				break;
+			
+			/*
 			for(int i = 0; i < grid.getHeight(); i++) {
 				for(int j = 0; j < grid.getWidth(); j++) {
 					int ref = grid.get(j, i);
@@ -87,21 +109,7 @@ public class GridChallenge1 {
 			}
 			System.out.println();
 			//*/
-			boolean on = false;
-			int j = 0;
-			for(int i = 1; i <= players; i++) {
-				BattlegroundAnimal obj = manager.getObj(i);
-				if(obj.isAlive()) {
-					int[] xy = manager.getObj(i).update();
-					grid.getXY(manager.getPos(i), xy);
-					j++;
-					if(obj.getType() == "Bear")
-						on |= true;
-				} 
-			}
-			if(!on)
-				break;
-			//System.out.println(j);
+			
 			viewer.updateStorm();
 			for(int i = 1; i <= players; i++)
 			{
@@ -118,8 +126,8 @@ public class GridChallenge1 {
 						boolean fo = opponent.defend(player.getType());
 						boolean battle = fp || fo;
 						if(battle) {
-							int sp = player.getHealth();
-							int so = opponent.getHealth();
+							//int sp = player.getHealth();
+							//int so = opponent.getHealth();
 							while(player.isAlive() && opponent.isAlive()) {
 								if(fp) {
 									opponent.attack(player.getAttack());
@@ -131,23 +139,23 @@ public class GridChallenge1 {
 								}
 							}
 							if(player.isAlive()) {
-								System.out.println("A " + opponent.getType() + " was killed by a " + player.getType() + ", losing " + (sp - player.getHealth()) + " HP");
+								//System.out.println("A " + opponent.getType() + " was killed by a " + player.getType() + ", losing " + (sp - player.getHealth()) + " HP");
 								player.eat(opponent.getWeight());							
 								manager.move(i, npos);		
 							} else if(opponent.isAlive()) {
-								System.out.println("A " + player.getType() + " was killed by a " + opponent.getType() + ", losing " + (so - opponent.getHealth()) + " HP");	
+								//System.out.println("A " + player.getType() + " was killed by a " + opponent.getType() + ", losing " + (so - opponent.getHealth()) + " HP");	
 								opponent.eat(player.getWeight());
 								manager.remove(i);
 							} else {
-								System.out.println("A " + opponent.getType() + " and a " + player.getType() + " both died in a fight.");
-								Carcass carcass = new Carcass(reader, rand, player.getWeight() + opponent.getWeight());;
+								//System.out.println("A " + opponent.getType() + " and a " + player.getType() + " both died in a fight.");
+								Carcass carcass = new Carcass(reader, rand, player.getWeight() + opponent.getWeight(), competitors.length);
 								manager.replace(carcass, to);
 								manager.remove(i);
 								player.setAlive(false);
 							}	
 						} else {
-							System.out.println("A " + opponent.getType() + " and a " + player.getType() + " collided and died.");
-							Carcass carcass = new Carcass(reader, rand, player.getWeight() + opponent.getWeight());;
+							//System.out.println("A " + opponent.getType() + " and a " + player.getType() + " collided and died.");
+							Carcass carcass = new Carcass(reader, rand, player.getWeight() + opponent.getWeight(), competitors.length);;
 							manager.replace(carcass, to);
 							manager.remove(i);
 							player.setAlive(false);
@@ -156,7 +164,14 @@ public class GridChallenge1 {
 						manager.move(i, npos);	
 				}
 			}
+			System.out.println("End of round " + c + ".");
+			for(int i = 0; i < teams.length; i++)
+				System.out.println("The " + teams[i] + " has " + scores[i] + " points.");
+			System.out.println("=============================");
 		}
+		System.out.println("The game has completed! No bears remain.");
+		for(int i = 0; i < teams.length; i++)
+			System.out.println("The " + teams[i] + " finished with " + scores[i] + " points.");
 	}
 
 }

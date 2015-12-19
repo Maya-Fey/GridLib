@@ -11,9 +11,9 @@ public class Seal extends BattlegroundAnimal {
 	private int scare = 0,
 				prev = 0;
 
-	public Seal(GridReader reader, Random rand)
+	public Seal(GridReader reader, Random rand, int team)
 	{
-		super(reader, rand);
+		super(reader, rand, team);
 		this.vision = 22 + rand.nextInt(23);
 		this.resistance = 5;
 		this.weight = 150 + rand.nextInt(151);

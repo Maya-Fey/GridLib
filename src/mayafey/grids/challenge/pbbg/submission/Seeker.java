@@ -11,19 +11,10 @@ public class Seeker
 
 	private final int[] directions = new int[8];
 	private int def;
-	private int num = 0;
-	private static int kek = 0;
 	
-	public void init()
-	{
-		num = kek++;
-		def = fromNumber(this.access.getRandom().nextInt(8));
-	}
+	public void init() {}
 	
-	public void tick() {
-		//if(num == -1)
-		System.out.println(num + " (at X: " + access.getX() + ", Y: " + access.getY() + ") has " + access.getWeight() + "kg in weight and has " + access.getHealth() + "/" + access.getMaxHealth() + " HP.");
-	}
+	public void tick() {}
 	
 	public boolean defendAgainst(String type)
 	{
@@ -33,7 +24,7 @@ public class Seeker
 	public int move(GridView<String> view)
 	{
 		Arrays.fill(directions, 9001);
-		int move = def; //Arbitrary default direction
+		int move = def; 
 		for(int i = 0; i < view.getGivenSize(); i++) {
 			String type = view.getObj(i);
 			int x = view.getX(i),
