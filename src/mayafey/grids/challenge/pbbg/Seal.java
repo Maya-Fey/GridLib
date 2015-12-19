@@ -7,12 +7,15 @@ import mayafey.grids.data.GridView;
 import mayafey.grids.data.PositionGrid;
 
 public class Seal extends BattlegroundAnimal {
+	
+	private int scare = 0,
+				prev = 0;
 
 	public Seal(GridReader reader, Random rand)
 	{
 		super(reader, rand);
-		this.vision = 20 + rand.nextInt(21);
-		this.resistance = 4;
+		this.vision = 22 + rand.nextInt(23);
+		this.resistance = 5;
 		this.weight = 150 + rand.nextInt(151);
 		this.health = this.getMaxHealth();
 	}
@@ -38,12 +41,11 @@ public class Seal extends BattlegroundAnimal {
 				north = false,
 				south = false,
 			     move = false;
-		int     deast = 0,
-		        dwest = 0,
-			   dnorth = 0,
-			   dsouth = 0;
+		int     deast = 1000,
+		        dwest = 1000,
+			   dnorth = 1000,
+			   dsouth = 1000;
 		int i = 0;
-		System.out.println("I am at (X: " + this.getX() + ", Y: " + this.getY() + ")");
 		while(i < view.getGivenSize()) {
 			String animal = view.getObj(i);
 			if(animal != "Bear") {
@@ -55,7 +57,6 @@ public class Seal extends BattlegroundAnimal {
 			int ay = view.getY(i);
 			int dist = reader.distanceFrom(x, ax, y, ay);
 			int dir = reader.getDirection(x, ax, y, ay);
-			System.out.println("Bear at (X: " + ax + ", Y: " + ay + ") - " + dist + " squares to the " + PositionGrid.getDirection(dir));
 			if(PositionGrid.goesEast(dir)) {
 				east |= true;
 				if(dist < deast)
@@ -80,6 +81,7 @@ public class Seal extends BattlegroundAnimal {
 		} 
 		int go = 0;
 		if(move) {
+			scare = 4;
 			if(east ^ west) {
 				if(east)
 					go = PositionGrid.setWest(go);
@@ -104,9 +106,9 @@ public class Seal extends BattlegroundAnimal {
 					else
 						go = PositionGrid.setSouth(go);
 			}
-		}
-		System.out.println("I have decided to go " + PositionGrid.getDirection(go));
-		return go;
+		} else if(scare-- > 0) 
+			go = prev;
+		return prev = go;
 	}
 
 	public String getType()
@@ -114,7 +116,9 @@ public class Seal extends BattlegroundAnimal {
 		return "Seal";
 	}
 	
-	@Override
-	public void eat(int food) {}
+	public void eat(int food)
+	{
+		this.weight += food / 10;
+	}
 
 }

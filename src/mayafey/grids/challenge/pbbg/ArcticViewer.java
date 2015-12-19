@@ -51,7 +51,7 @@ public class ArcticViewer extends GridViewer<String, BattlegroundAnimal> {
 				obj = grid.get(scratch[j], y);
 				if(obj != 0) {
 					BattlegroundAnimal animal = manager.getObj(obj);
-					if(rand.nextInt(ID) > 5 + rand.nextInt(intensity))
+					if(rand.nextInt(ID) > 7 + rand.nextInt(intensity))
 						view.add(animal.getType(), scratch[j], y);
 					else
 						view.add("Animal", scratch[j], y);

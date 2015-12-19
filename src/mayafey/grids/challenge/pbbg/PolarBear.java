@@ -42,10 +42,9 @@ public class PolarBear extends BattlegroundAnimal {
 
 	public void tick()
 	{
-		//A nonzero respiration will always result in a -1 modifier to attrition
-		int sub = 5 + random.nextInt(6) + (respeff > 0 ? 1 : 0);
+		int sub = 5 + random.nextInt(7);
 		if(respeff > 0) {
-			sub *= 100 - respeff + 1;
+			sub *= 100 - (respeff + 1);
 			sub /= 100;
 		}
 		this.weight -= sub;
@@ -63,7 +62,7 @@ public class PolarBear extends BattlegroundAnimal {
 
 	public int getAttack()
 	{
-		int wdmg = weight / 4;
+		int wdmg = weight / 8;
 		wdmg *= 100 + attack;
 		wdmg /= 100;
 		return attack * 2 + wdmg;
@@ -89,6 +88,7 @@ public class PolarBear extends BattlegroundAnimal {
 		eaten += 1 + respeff > 1 ? random.nextInt(respeff / 2) : 0;
 		food *= 20 + random.nextInt(31) + digeff;
 		food /= 100;
+		this.regenerate(food / 20);
 		this.weight += food;
 	}
 	

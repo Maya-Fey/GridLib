@@ -285,18 +285,14 @@ public class PositionGrid {
 			if(cx) {
 				boolean neg = (dir & 1) == 0;
 				x = neg ? x - space : x + space;
-				if(x < 0 || x >= width) {
-					grid[pos] = 0;
+				if(x < 0 || x >= width)
 					return -1;
-				}
 			} dir >>>= 1;
 			if(cy) {
 				boolean neg = (dir & 1) == 0;
 				y = neg ? y - space : y + space;
-				if(y < 0 || y >= width) {
-					grid[pos] = 0;
+				if(y < 0 || y >= width) 
 					return -1;
-				}
 			}
 		}
 		return y * width + x;
@@ -306,7 +302,6 @@ public class PositionGrid {
 	{
 		if(dir == 0)
 			return  y * width + x;
-		int pos = y * width + x;
 		boolean cx = (dir & 1) == 1; dir >>>= 1;
 		boolean cy = (dir & 1) == 1; dir >>>= 1;
 		if(wrap) {
@@ -326,18 +321,14 @@ public class PositionGrid {
 			if(cx) {
 				boolean neg = (dir & 1) == 0;
 				x = neg ? x - space : x + space;
-				if(x < 0 || x >= width) {
-					grid[pos] = 0;
+				if(x < 0 || x >= width)
 					return -1;
-				}
 			} dir >>>= 1;
 			if(cy) {
 				boolean neg = (dir & 1) == 0;
 				y = neg ? y - space : y + space;
-				if(y < 0 || y >= width) {
-					grid[pos] = 0;
+				if(y < 0 || y >= width)
 					return -1;
-				}
 			}
 		}
 		return y * width + x;

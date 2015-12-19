@@ -10,24 +10,29 @@ public class Walrus extends BattlegroundAnimal {
 	public Walrus(GridReader reader, Random rand) {
 		super(reader, rand);
 		this.vision = 0;
-		this.resistance = 20 + rand.nextInt(21);
+		this.resistance = 10 + rand.nextInt(41);
 		this.weight = 400;
 		this.health = this.getMaxHealth();
 	}
 
 	public boolean defend(String animal)
 	{
-		return animal == "Seal";
+		return true;
 	}
 
 	public void tick() 
 	{
 		this.regenerate(5);
+		if(this.weight > 400)
+			if(this.weight - 10 < 400)
+				this.weight = 400;
+			else
+				this.weight -= 10;
 	}
 
 	public int getAttack()
 	{
-		return 1;
+		return 10;
 	}
 
 	public int getMove(GridView<String> view)
@@ -42,7 +47,12 @@ public class Walrus extends BattlegroundAnimal {
 
 	public void eat(int food)
 	{
-		this.weight += food / 2; 
+		this.weight += (food * 80) / 100; 
+	}
+	
+	public int getMaxHealth()
+	{
+		return this.weight + (this.resistance * 2);
 	}
 
 }
