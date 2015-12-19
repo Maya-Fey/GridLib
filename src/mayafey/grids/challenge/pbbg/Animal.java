@@ -3,37 +3,25 @@ package mayafey.grids.challenge.pbbg;
 public abstract class Animal {
 
 	protected int health;
-	protected int maxhealth;
 	
 	protected boolean alive = true;
 	
-	public final void heal(int add)
+	public final void regenerate(int add)
 	{
 		if(alive) {
-			regenerate(add);
-			if(health > maxhealth)
-				health = maxhealth;
+			health += add;
+			if(health > this.getMaxHealth())
+				health = this.getMaxHealth();
 		}
 	}
 	
-	public final void attack(int damage)
+	public final void damage(int damage)
 	{
 		if(alive) {
-			damage(damage);
+			health -= damage;
 			if(health <= 0)
 				this.alive = false;
 		}
-	}
-	
-	public void regenerate(int add)
-	{
-		health += add;
-		
-	}
-	
-	public void damage(int damage)
-	{
-		health -= damage;
 	}
 	
 	public final boolean isAlive()
@@ -41,11 +29,17 @@ public abstract class Animal {
 		return this.alive;
 	}
 	
-	public final void setAlive(boolean alive)
+	public void setAlive(boolean alive)
 	{
 		this.alive = alive;
 	}
 	
+	public int getHealth()
+	{
+		return this.health;
+	}
+	
 	public abstract String getType();
+	public abstract int getMaxHealth();
 	
 }

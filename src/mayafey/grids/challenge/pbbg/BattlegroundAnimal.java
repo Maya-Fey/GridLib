@@ -15,20 +15,33 @@ public abstract class BattlegroundAnimal extends Animal {
 	
 	protected final Random random;
 	protected final GridReader reader;
+	protected final int team;
 	
-	public BattlegroundAnimal(GridReader reader, Random rand)
+	public BattlegroundAnimal(GridReader reader, Random rand, int team)
 	{
 		this.reader = reader;
 		this.random = rand;
+		this.team = team;
 	}
 	
-	public void damage(int damage)
+	public abstract boolean defend(String animal);
+	public abstract void tick();
+	public abstract int getAttack();
+	public abstract int getMove(GridView<String> view);
+	public abstract void eat(int food);
+	
+	public int[] update()
 	{
-		damage *= 100;
-		damage /= 50 + random.nextInt(151);
+		return pos;
+	}
+	
+	public void attack(int damage)
+	{
+		damage *= 50 + random.nextInt(101);;
+		damage /= 100;
 		damage *= 100 - resistance;
 		damage /= 100;
-		this.health -= damage;
+		damage(damage);
 	}
 	
 	public int getWeight()
@@ -41,18 +54,12 @@ public abstract class BattlegroundAnimal extends Animal {
 		return this.resistance;
 	}
 	
-	public final int getVision()
+	public int getVision()
 	{
 		return this.vision;
 	}
 	
-	public abstract boolean defend(String animal);
-	public abstract void tick();
-	public abstract int attack();
-	public abstract int getSpeed();
-	public abstract int getMove(GridView<String> view);
-	
-	public final Random getRandom()
+	public Random getRandom()
 	{
 		return this.random;
 	}
@@ -62,19 +69,43 @@ public abstract class BattlegroundAnimal extends Animal {
 		return this.pos;
 	}
 	
-	public final int getX()
+	public int getX()
 	{
 		return pos[0];
 	}
 	
-	public final int getY()
+	public int getY()
 	{
 		return pos[1];
 	}
 	
-	public final int distanceFrom(int x, int y)
+	public int distanceFrom(int x, int y)
 	{
 		return reader.distanceFrom(pos[0], x, pos[1], y);
 	}
+	
+	public int directionTo(int x, int y)
+	{
+		return reader.getDirection(pos[0], x, pos[1], y);
+	}
+	
+	public int getMaxHealth()
+	{
+		return this.weight / 2;
+	}
+	
+	public int getResistDamage()
+	{
+		return resistance != 0 ? random.nextInt(resistance + 10) : 0;
+	}
 
+	public void setAlive(boolean b)
+	{
+		super.setAlive(b);
+	}
+	
+	public final int getTeam()
+	{
+		return this.team;
+	}
 }
