@@ -7,8 +7,8 @@ import mayafey.grids.data.GridView;
 
 public class Carcass extends BattlegroundAnimal {
 
-	public Carcass(GridReader reader, Random rand, int weight) {
-		super(reader, rand);
+	public Carcass(GridReader reader, Random rand, int weight, int team) {
+		super(reader, rand, team);
 		this.resistance = 0;
 		this.vision = 0;
 		this.weight = weight;

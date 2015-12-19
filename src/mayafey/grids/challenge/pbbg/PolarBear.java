@@ -13,9 +13,9 @@ public class PolarBear extends BattlegroundAnimal {
 	 			  eaten = 0;
 	
 	private final PolarBearBrain brain;
-
-	public PolarBear(GridReader reader, Random rand, PolarBearBrain brain, int[] skills) {
-		super(reader, rand);
+	
+	public PolarBear(GridReader reader, Random rand, PolarBearBrain brain, int[] skills, int team) {
+		super(reader, rand, team);
 		this.weight = 200 + rand.nextInt(801);
 		this.brain = brain;
 		this.health = this.getMaxHealth();
@@ -37,7 +37,6 @@ public class PolarBear extends BattlegroundAnimal {
 			this.digeff = skills[3];
 			this.respeff = skills[4];
 		} 
-			
 	}
 
 	public void tick()
@@ -48,7 +47,7 @@ public class PolarBear extends BattlegroundAnimal {
 			sub /= 100;
 		}
 		this.weight -= sub;
-		if(this.weight < 25) {
+		if(this.weight < 50) {
 			this.setAlive(false);
 			return;
 		}
@@ -106,5 +105,10 @@ public class PolarBear extends BattlegroundAnimal {
 	{
 		return this.respeff;
 	}
-
+	
+	public int getMaxHealth()
+	{
+		return this.weight / 2 + this.resistance;
+	}
+	
 }

@@ -7,8 +7,8 @@ import mayafey.grids.data.GridView;
 
 public class Walrus extends BattlegroundAnimal {
 
-	public Walrus(GridReader reader, Random rand) {
-		super(reader, rand);
+	public Walrus(GridReader reader, Random rand, int team) {
+		super(reader, rand, team);
 		this.vision = 0;
 		this.resistance = 10 + rand.nextInt(41);
 		this.weight = 400;
