@@ -22,12 +22,14 @@ public class GridChallenge1 {
 	
 	private static final Class<?>[] competitors = new Class<?>[]
 		{
-			Seeker.class
+			Seeker.class,
+			Hivemind.class
 		};
 	
 	private static final String[] teams = new String[] 
 		{
 			"Klingon Search and Destroy Team",
+			"The Bugger Queen",
 			"Walrus King"
 		};
 	
@@ -81,7 +83,7 @@ public class GridChallenge1 {
 		int c = 0;
 		while(true)
 		{
-			if(c++ > 1000)
+			if(c++ > 10000)
 				break;
 			
 			boolean on = false;
