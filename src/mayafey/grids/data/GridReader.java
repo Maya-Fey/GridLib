@@ -67,5 +67,15 @@ public class GridReader {
 			else
 				return PositionGrid.NORTHEAST;
 	}
+	
+	public int getHeight()
+	{
+		return grid.getHeight();
+	}
+	
+	public int getWidth()
+	{
+		return grid.getWidth();
+	}
 
 }

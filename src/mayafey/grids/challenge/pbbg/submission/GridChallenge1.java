@@ -18,6 +18,8 @@ import mayafey.grids.data.PositionGrid;
 
 public class GridChallenge1 {
 	
+	public static final int BATTLESIZE = 1000;
+	
 	private static final Class<?>[] competitors = new Class<?>[]
 		{
 			Seeker.class
@@ -55,16 +57,16 @@ public class GridChallenge1 {
 		/*
 		 * 100 Bears, 100 Walrus, 100 Seals per competitor, 1 Animal per 10 squares:
 		 */
-		int size = ((int) Math.sqrt(competitors.length * 3000)) + 1;
-		int players = 300 * competitors.length;
+		int size = ((int) Math.sqrt(competitors.length * 30 * BATTLESIZE)) + 1;
+		int players = 3 * BATTLESIZE * competitors.length;
 		PositionGrid grid = new PositionGrid(size, true);
 		GridObjectManager<BattlegroundAnimal> manager = new GridObjectManager<BattlegroundAnimal>(grid, new BattlegroundAnimal[players + 1]);
 		GridReader reader = new GridReader(grid);
-		Random rand = new Random(43);
+		Random rand = new Random(42);
 		int pos = 0;
 		long[] scores = new long[teams.length];
 		int[] skills = new int[5];
-		for(int i = 0; i < 100; i++) 
+		for(int i = 0; i < BATTLESIZE; i++) 
 		{
 			for(int j = 0; j < cons.length; j++) 
 			{

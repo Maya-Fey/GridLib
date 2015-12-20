@@ -80,4 +80,9 @@ public class PolarBearAccessObject {
 	{
 		return bear.directionTo(x, y);
 	}
+	
+	public int gridSize()
+	{
+		return bear.reader.getHeight();
+	}
 }
