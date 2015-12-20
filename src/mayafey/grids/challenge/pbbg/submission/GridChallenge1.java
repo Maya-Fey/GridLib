@@ -60,7 +60,7 @@ public class GridChallenge1 {
 		PositionGrid grid = new PositionGrid(size, true);
 		GridObjectManager<BattlegroundAnimal> manager = new GridObjectManager<BattlegroundAnimal>(grid, new BattlegroundAnimal[players + 1]);
 		GridReader reader = new GridReader(grid);
-		Random rand = new Random(42);
+		Random rand = new Random(43);
 		int pos = 0;
 		long[] scores = new long[teams.length];
 		int[] skills = new int[5];
@@ -116,10 +116,18 @@ public class GridChallenge1 {
 				BattlegroundAnimal player = manager.getObj(i);
 				if(player.isAlive()) {
 					viewer.view(view, i);
-					int npos = grid.getMoveRel(manager.getPos(i), player.getMove(view), 1);
-					int to = grid.get(npos);
-					if(to == i)
+					int move;
+					try {
+						move = player.getMove(view);
+					} catch(Exception e) {
+						Carcass carcass = new Carcass(reader, rand, player.getWeight(), competitors.length);
+						manager.replace(carcass, i);
 						continue;
+					}
+					if(move == 0)
+						continue;
+					int npos = grid.getMoveRel(manager.getPos(i), move, 1);
+					int to = grid.get(npos);
 					if(to != 0) {
 						BattlegroundAnimal opponent = manager.getObj(to);
 						boolean fp = player.defend(opponent.getType());

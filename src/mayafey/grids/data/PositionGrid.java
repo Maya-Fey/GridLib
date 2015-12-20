@@ -337,7 +337,11 @@ public class PositionGrid {
 	public String printPos(int pos)
 	{
 		return "(X: " + (pos % width) + ", Y:" + (pos / width) + ")";
-		
+	}
+	
+	public static String printPos(int x, int y)
+	{
+		return "(X: " + x + ", Y:" + y + ")";
 	}
 	
 	/**
