@@ -21,7 +21,7 @@ public class PolarBear extends BattlegroundAnimal {
 		this.health = this.getMaxHealth();
 		brain.setAccess(new PolarBearAccessObject(this));
 		brain.getSkills(skills, weight);
-		int total = 0;
+		long total = 0;
 		boolean pos = true;
 		for(int i : skills)
 			if(i >= 0)
