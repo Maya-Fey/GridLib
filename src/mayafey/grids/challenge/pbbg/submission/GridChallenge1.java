@@ -181,9 +181,17 @@ public class GridChallenge1 {
 				System.out.println("The " + teams[i] + " has " + scores[i] + " points.");
 			System.out.println("=============================");
 		}
+		int max = 0;
+		for(String s : teams)
+			if(s.length() > max)
+				max = s.length();
+		char[] arr = new char[max];
 		System.out.println("The game has completed! No bears remain.");
-		for(int i = 0; i < teams.length; i++)
-			System.out.println("The " + teams[i] + " finished with " + scores[i] + " points.");
+		for(int i = 0; i < teams.length; i++) {
+			Arrays.fill(arr, ' ');
+			System.arraycopy(teams[i].toCharArray(), 0, arr, 0, teams[i].length());
+			System.out.println("The " + new String(arr) + " finished with " + scores[i] + " points.");
+		}
 	}
 
 }
