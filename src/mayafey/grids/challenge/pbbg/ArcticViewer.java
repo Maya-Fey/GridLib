@@ -33,6 +33,7 @@ public class ArcticViewer extends GridViewer<String, BattlegroundAnimal> {
 		int skill = viewer.getVision();
 		skill += rand.nextInt(23);
 		int size = skill / 10;
+		view.setVisionSize(size);
 		int length = size * 2 + 1;
 		int gwidth = grid.getWidth();
 		int gheight = grid.getHeight();

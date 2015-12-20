@@ -13,6 +13,7 @@ public class GridView<Type> {
 	
 	private int size = 0;
 	private int givenSize = 0;
+	private int last;
 	
 	public GridView(Type[] arr)
 	{
@@ -27,6 +28,11 @@ public class GridView<Type> {
 		this.arr = (Type[]) Array.newInstance(type, size);
 		this.x = new int[size];
 		this.y = new int[size];
+	}
+	
+	public int getVisionSize()
+	{
+		return this.last;
 	}
 	
 	public int size()
@@ -79,6 +85,7 @@ public class GridView<Type> {
 		Arrays.fill(arr, 0, givenSize, null);
 		Arrays.fill(x, 0, givenSize, 0);
 		Arrays.fill(y, 0, givenSize, 0);
+		last = 0;
 		givenSize = 0;
 	}
 	
@@ -87,6 +94,11 @@ public class GridView<Type> {
 		   arr[givenSize  ] = obj;
 		this.x[givenSize  ] = x;
 		this.y[givenSize++] = y;
+	}
+	
+	public void setVisionSize(int size)
+	{
+		this.last = size;
 	}
 	
 	public Iterator<GridPosition<Type>> iterator()
