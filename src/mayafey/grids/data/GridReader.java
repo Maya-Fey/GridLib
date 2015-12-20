@@ -77,5 +77,10 @@ public class GridReader {
 	{
 		return grid.getWidth();
 	}
+	
+	public int getPosition(int x, int y)
+	{
+		return x + y * grid.getWidth();
+	}
 
 }

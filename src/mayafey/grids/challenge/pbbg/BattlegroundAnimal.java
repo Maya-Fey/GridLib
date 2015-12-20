@@ -64,6 +64,11 @@ public abstract class BattlegroundAnimal extends Animal {
 		return this.random;
 	}
 	
+	public int getPos()
+	{
+		return reader.getPosition(pos[0], pos[1]);
+	}
+	
 	public int[] getPosition()
 	{
 		return this.pos;

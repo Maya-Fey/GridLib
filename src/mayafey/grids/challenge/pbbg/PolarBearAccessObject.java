@@ -16,7 +16,12 @@ public class PolarBearAccessObject {
 		return this.bear.random;
 	}
 	
-	public int[] getPos()
+	public int getPos()
+	{
+		return bear.getPos();
+	}
+	
+	public int[] getPosition()
 	{
 		return bear.getPosition();
 	}
