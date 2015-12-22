@@ -11,9 +11,9 @@ public class GridView<Type> {
 	private final int[] x,
 						y;
 	
-	private int size = 0;
-	private int givenSize = 0;
-	private int last;
+	protected int size = 0;
+	protected int givenSize = 0;
+	protected int last;
 	
 	public GridView(Type[] arr)
 	{
