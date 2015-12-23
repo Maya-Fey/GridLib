@@ -394,6 +394,26 @@ public class PositionGrid {
 		return (dir & EAST) == WEST; 
 	}
 	
+	public static boolean goesEW(int dir)
+	{
+		return (dir & 1) == 1;
+	}
+	
+	public static boolean goesNS(int dir)
+	{
+		return (dir & 2) == 2;
+	}
+	
+	public static int getEW(int dir)
+	{
+		return dir & EAST;
+	}
+	
+	public static int getNS(int dir)
+	{
+		return dir & NORTH;
+	}
+	
 	public static int setNorth(int dir)
 	{
 		return dir | NORTH;
@@ -419,6 +439,17 @@ public class PositionGrid {
 		return directions[num];
 	}
 	
+	/**
+	 * 0 = STAY<br>
+	 * 1 = NORTH<br>
+	 * 2 = NORTHEAST<br>
+	 * 3 = EAST<br>
+	 * 4 = SOUTHEAST<br>
+	 * 5 = SOUTH<br>
+	 * 6 = SOUTHWEST<br>
+	 * 7 = WEST<br>
+	 * 8 = NORTHWEST<br>
+	 */
 	public static int numberFromDirection(int num)
 	{
 		for(int i = 0; i < directions.length; i++)
