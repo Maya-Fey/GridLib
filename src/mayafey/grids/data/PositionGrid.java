@@ -434,6 +434,15 @@ public class PositionGrid {
 		return (dir & IEAST) | WEST;
 	}
 	
+	public static int reverse(int dir)
+	{
+		if((dir & 1) == 1)
+			dir ^= 4;
+		if((dir & 2) == 2)
+			dir ^= 8;
+		return dir;
+	}
+	
 	public static int directionFromNumber(int num)
 	{
 		return directions[num];

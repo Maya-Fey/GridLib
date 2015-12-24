@@ -24,6 +24,7 @@ public class HiveView extends GridView<String> {
 	public void reset()
 	{
 		Arrays.fill(reliability, 0);
+		super.reset();
 	}
 	
 	public int getReliability(int i)
