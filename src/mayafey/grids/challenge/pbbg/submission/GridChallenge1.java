@@ -57,7 +57,7 @@ public class GridChallenge1 {
 			cons[i] = (Constructor<PolarBearBrain>) con;
 		}
 		/*
-		 * 100 Bears, 100 Walrus, 100 Seals per competitor, 1 Animal per 10 squares:
+		 * BATTLESIZE Bears, Walrus, and Seals per competitor, 1 Animal per 10 squares:
 		 */
 		int size = ((int) Math.sqrt(competitors.length * 30 * BATTLESIZE)) + 1;
 		int players = 3 * BATTLESIZE * competitors.length;
@@ -124,6 +124,7 @@ public class GridChallenge1 {
 					try {
 						move = player.getMove(view);
 					} catch(Exception e) {
+						System.out.println("Oh no.");
 						Carcass carcass = new Carcass(reader, rand, player.getWeight(), competitors.length);
 						manager.replace(carcass, i);
 						continue;
@@ -176,11 +177,47 @@ public class GridChallenge1 {
 						manager.move(i, npos);	
 				}
 			}
-			System.out.println("End of round " + c + ".");
+			/*System.out.println("End of round " + c + ".");
 			for(int i = 0; i < teams.length; i++)
 				System.out.println("The " + teams[i] + " has " + scores[i] + " points.");
-			System.out.println("=============================");
+			System.out.println("=============================");*/
 		}
+		
+		for(int i = 0; i < grid.getHeight(); i++) {
+			for(int j = 0; j < grid.getWidth(); j++) {
+				int ref = grid.get(j, i);
+				if(ref == 0)
+					System.out.print("[ ]");
+				else
+					System.out.print("[" + manager.getObj(ref).getTypeChar() + "]");
+			}
+			System.out.println();
+		}
+		System.out.println();
+		System.out.println(c);
+		int seal = 0;
+		int walrus = 0;
+		int carcass = 0;
+		for(int i = 1; i <= players; i++) {
+			BattlegroundAnimal obj = manager.getObj(i);
+			if(!obj.isAlive())
+				continue;
+			switch(obj.getType())
+			{
+				case "Seal":
+					seal++;
+					break;
+				case "Walrus":
+					walrus++;
+					break;
+				case "Carcass":
+					carcass++;
+					break;
+			}
+		}
+		System.out.println(seal + " seals survived");
+		System.out.println(walrus + " walrus survived");
+		System.out.println(carcass + " carcass survived");
 		int max = 0;
 		for(String s : teams)
 			if(s.length() > max)
